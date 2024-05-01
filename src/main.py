@@ -1,0 +1,1 @@
+""" interacción con el usuario y la selección de métodos numéricos"""
