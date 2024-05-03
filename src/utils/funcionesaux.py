@@ -20,6 +20,7 @@ class FuncionesAuxiliares:
               )
         ecuacion_str = input("Ingrese la ecuación: ")
         print (ecuacion_str)
+
         
 import sympy as sp
 
