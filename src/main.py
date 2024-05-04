@@ -26,6 +26,10 @@ def choose_method():
                 
             elif method == 2:
                 print("\t*** Metodo de Biseccion ***")
+            parametros_biseccion = capturar_parametros_biseccion()
+            if parametros_biseccion is not None:
+                 izquierda, derecha, tol, max_iter = parametros_biseccion
+                
             elif method == 0:
                 print("Saliendo del programa")
                 break
