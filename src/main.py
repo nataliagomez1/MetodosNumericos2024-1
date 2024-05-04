@@ -13,7 +13,7 @@ def choose_method():
             method = int(method)
             if method == 1:
                 print("\t*** Metodo Punto Fijo ***")
-                
+                ecuacion= capturar_ecuacion
                 while True:
                     function = input("Ingrese la funcion auxiliar: ")
                     point = input("Ingrese el punto inicial: ")
@@ -26,6 +26,7 @@ def choose_method():
                 
             elif method == 2:
                 print("\t*** Metodo de Biseccion ***")
+            
             parametros_biseccion = capturar_parametros_biseccion()
             if parametros_biseccion is not None:
                  izquierda, derecha, tol, max_iter = parametros_biseccion
