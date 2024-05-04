@@ -82,10 +82,28 @@ def validate_parameters_puntofijo(starting_point, auxiliary_function):
 
 def capturar_parametros_biseccion():        
     
-    izquierda = float(input("Ingrese el extremo izquierdo del intervalo: "))
-    derecha = float(input("Ingrese el extremo derecho del intervalo: "))
+    while True:
+        
+        try:
+            izquierda = float(input("Ingrese el extremo izquierdo del intervalo: "))
+            derecha = float(input("Ingrese el extremo derecho del intervalo: "))
+        except ValueError:
+            print("Los extremos del intervalo deben ser números reales. Inténtelo nuevamente.")
+            continue
+        
+        if izquierda >= derecha:
+            print("El extremo izquierdo del intervalo debe ser menor que el extremo derecho. Inténtelo nuevamente.")
+            continue
+
+        try:
+            tol = float(input("Ingrese la tolerancia: "))
+            max_iter = int(input("Ingrese el número máximo de iteraciones: "))
+        except ValueError:
+            print("La tolerancia y el número máximo de iteraciones deben ser números. Inténtelo nuevamente.")
+            continue
+
+        if tol <= 0 or max_iter <= 0:
+            print("La tolerancia y el número máximo de iteraciones deben ser números positivos. Inténtelo nuevamente.")
+            continue
     
-    tol = float(input("Ingrese la tolerancia (precisión deseada): "))
-    max_iter = int(input("Ingrese el número máximo de iteraciones permitidas: "))
-    
-    return izquierda, derecha, tol, max_iter
+        return izquierda, derecha, tol, max_iter
