@@ -1,9 +1,8 @@
 """Funciones auxiliares que sirvan en varios lugares del código, como funciones para graficar, validar entradas, etc."""
 class FuncionesAuxiliares:
-
-    def capturar_ecuacion():
-     # Capturar la ecuación ingresada por el usuario
-        print("Estas son las operaciones y respectivos simbolos que puede usar para escribir la ecuacion",
+    from sympy import symbols, Eq, sqrt
+def capturar_ecuacion():
+    print("Estas son las operaciones y respectivos simbolos que puede usar para escribir la ecuacion",
               "Suma: +"
               "Resta: -"
               "Multiplicacion: *"
@@ -18,8 +17,14 @@ class FuncionesAuxiliares:
               "     sqrt(x) = 4"
 
               )
-        ecuacion_str = input("Ingrese la ecuación: ")
-        print (ecuacion_str)
+    ecuacion_str = input("Ingrese la ecuación")
+    ecuacion_str = ecuacion_str.replace("^", "**")  # Reemplazar ^ con ** para potencias
+
+    # Convertir la cadena de texto en una expresión simbólica
+    x = symbols('x')
+    ecuacion = Eq(eval(ecuacion_str.split('=')[0]), 0)
+
+    return ecuacion        
 
         
 import sympy as sp
