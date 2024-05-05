@@ -26,7 +26,6 @@ def fixedpoint(function, x0, toleration=0.01, iteramax=100):
                 divergencecount = 0
             
             previouserror = error
-            print(f"Iteration {iteration}: x1 = {x1}, error = {error}")
             x0 = x1
             iteration += 1
 
