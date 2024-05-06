@@ -12,8 +12,6 @@ def bisection_method(function, left, right, tol, max_iter):
     Returns:
         float: La aproximación de la raíz de f.
     """
-    if function(left) * function(right) >= 0:
-        return None
     
     iter_count = 0
     while (right - left) / 2 > tol:

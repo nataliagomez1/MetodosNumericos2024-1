@@ -27,7 +27,7 @@ def choose_method():
                 parametros_biseccion = capturar_parametros_biseccion()
                 if parametros_biseccion is not None:
                         izquierda, derecha, tol, max_iter = parametros_biseccion
-                        bisection_method(ecuacion_b, izquierda, derecha, tol, max_iter)
+                        print(bisection_method(ecuacion_b, izquierda, derecha, tol, max_iter))
             elif method == 0:
                 print("Saliendo del programa")
                 break
