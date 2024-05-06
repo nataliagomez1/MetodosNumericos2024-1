@@ -18,7 +18,7 @@ def capturar_ecuacion():
             "     sqrt(x) = 4"
 
             )
-        ecuacion_str = input("Ingrese la ecuación")
+        ecuacion_str = input("Ingrese la ecuación: ")
         
         # Verificar si la ecuación contiene caracteres no permitidos
         if not all(caracter.isdigit() or caracter.isalpha() or caracter.isspace() or caracter in "+-*/^=()" for caracter in ecuacion_str):
@@ -35,25 +35,8 @@ def capturar_ecuacion():
             continue
         
 import sympy as sp
-
-def validate_function(function):
-    """
-    Valida si la cadena de texto representa una función matemática válida en términos de 'x'.
-
-    Args:
-        function (str): Cadena de texto que representa la función matemática.
-
-    Returns:
-        bool: True si la función es válida, False si no lo es.
-    """
-    try:
-        x = sp.symbols('x')
-        sp.sympify(function.replace("^", "**"))
-        return True
-    except (sp.SympifyError, TypeError):
-        return False
     
-def validate_parameters_puntofijo(starting_point, auxiliary_function):
+def validate_parameters_puntofijo():
     """
     Valida los parámetros necesarios para el método del punto fijo.
 
@@ -65,20 +48,15 @@ def validate_parameters_puntofijo(starting_point, auxiliary_function):
         tuple or None: Una tupla que contiene la función auxiliar validada y el punto inicial convertido a float,
                        o None si ocurre algún error de validación.
     """
-    if not validate_function(auxiliary_function):
-        print("Error: La función auxiliar no es válida.")
-        return None
-    
-    x = sp.symbols('x')
-    function = sp.sympify(auxiliary_function.replace("^", "**"))
-    
-    try:
-        starting_point = float(starting_point)
-    except ValueError:
-        print("Error: El punto inicial no es válido.")
-        return None
-    
-    return function, starting_point
+    function = capturar_ecuacion()
+    while True:
+        try:
+            starting_point = float(input("Ingrese el punto inicial: "))
+            return function, starting_point
+        except:
+            print("El dato ingresado es invalido")
+            print("Ingrese datos numericos ")
+            continue
 
 def capturar_parametros_biseccion():        
     
