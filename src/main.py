@@ -1,5 +1,6 @@
 from utils.funcionesaux import *
 from methods.biseccion import bisection_method
+from methods.puntofijo import fixedpoint
 
 def show_menu():
     print("1. Metodo Punto Fijo")
@@ -18,7 +19,8 @@ def choose_method():
                 ecuacion= capturar_ecuacion
                 parametros_puntofijo = validate_parameters_puntofijo()
                 if parametros_puntofijo is not None:
-                    function, point = parametros_puntofijo
+                    function, x0 = parametros_puntofijo
+                    fixedpoint(function, x0, toleration=0.01, iteramax=100)
                 
             elif method == 2:
                 print("\t*** Metodo de Biseccion ***")
