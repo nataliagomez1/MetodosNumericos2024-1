@@ -3,14 +3,12 @@
 import os
 import sys
 
-# Obtiene la ruta del directorio src
 ruta_src = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
-# Agrega la ruta del directorio src al sys.path
 sys.path.append(ruta_src)
 
-# Ahora deberías poder importar el módulo methods
 from methods.puntofijo import fixedpoint
+from methods.biseccion import bisection_method
 
 import pytest
 import math
@@ -26,3 +24,18 @@ import math
 def test_fixedpoint(function, x0, expected_result):
     result = fixedpoint(function, x0)
     assert round(result, 10) == pytest.approx(expected_result, abs=0.000001)
+
+@pytest.mark.parametrize("function, left, right, tol, max_iter, expected_result", [
+    (lambda x: x - 2, 0, 4, 1e-6, 100, 2),
+    (lambda x: x**2 - 4, 0, 4, 1e-6, 100, 2),
+    (lambda x: math.exp(x) - 2, 0, 2, 1e-6, 100, math.log(2)),
+    (lambda x: x - 5, 0, 4, 1e-6, 100, None),
+    (lambda x: x**3 - 3*x + 1, -1, 1, 1e-4, 100, pytest.approx(0, abs=1e-4)),
+    (lambda x: x**3 - 3*x + 1, -1, 1, 1e-10, 5, None)
+])
+def test_bisection_method(function, left, right, tol, max_iter, expected_result):
+    result = bisection_method(function, left, right, tol, max_iter)
+    if expected_result is None:
+        assert result is None
+    else:
+        assert abs(result - expected_result) < tol
