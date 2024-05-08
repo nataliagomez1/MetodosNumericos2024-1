@@ -5,6 +5,7 @@ from methods.puntofijo import fixedpoint
 def show_menu():
     print("1. Metodo Punto Fijo")
     print("2. Metodo de Biseccion")
+    print("3")
     print("0. Salir")
 
 def choose_method():
@@ -16,11 +17,11 @@ def choose_method():
             if method == 1:
                 print("\t*** Metodo Punto Fijo ***")
                 
-                ecuacion= capturar_ecuacion
+                #ecuacion= capturar_ecuacion
                 parametros_puntofijo = validate_parameters_puntofijo()
                 if parametros_puntofijo is not None:
                     function, x0 = parametros_puntofijo
-                    fixedpoint(function, x0, toleration=0.01, iteramax=100)
+                    print(fixedpoint(function, x0, toleration=0.01, iteramax=100))
                 
             elif method == 2:
                 print("\t*** Metodo de Biseccion ***")
@@ -30,6 +31,9 @@ def choose_method():
                 if parametros_biseccion is not None:
                         izquierda, derecha, tol, max_iter = parametros_biseccion
                         print(bisection_method(ecuacion_b, izquierda, derecha, tol, max_iter))
+            elif method ==3:
+                mostrar=capturar_ecuacion()
+                print(str(mostrar))
             elif method == 0:
                 print("Saliendo del programa")
                 break

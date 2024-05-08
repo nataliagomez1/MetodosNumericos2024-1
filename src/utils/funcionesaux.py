@@ -52,6 +52,7 @@ def validate_parameters_puntofijo():
     while True:
         try:
             starting_point = float(input("Ingrese el punto inicial: "))
+            #print(f"Imprimir {starting_point:.2f} función {function} ")
             return function, starting_point
         except:
             print("El dato ingresado es invalido")

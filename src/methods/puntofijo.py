@@ -1,9 +1,19 @@
 """Logica metodo PUNTO FIJO"""
 
 import numpy as np
+from sympy import symbols, Eq,lambdify
 
 
-def fixedpoint(function, x0, toleration=0.01, iteramax=100):
+def fixedpoint(func, x0, toleration=0.01, iteramax=100):
+
+    
+
+    equation = func
+    expression = equation.lhs
+    x = symbols('x')
+    function = lambdify(x, expression, 'numpy')
+
+
     iteration = 1
     error = 1
     previouserror = 0
