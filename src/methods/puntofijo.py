@@ -4,7 +4,7 @@ import numpy as np
 from sympy import symbols, Eq,lambdify
 
 
-def fixedpoint(func, x0, toleration=0.01, iteramax=100):
+def fixedpoint(func, x0, toleration=0.001, iteramax=10):
 
     
 
