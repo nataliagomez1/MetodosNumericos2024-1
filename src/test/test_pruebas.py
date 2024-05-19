@@ -9,6 +9,8 @@ sys.path.append(ruta_src)
 
 from methods.puntofijo import fixedpoint
 from methods.biseccion import bisection_method
+from methods.newtonraphson import newton_raphson
+
 
 import pytest
 import math
@@ -39,3 +41,13 @@ def test_bisection_method(function, left, right, tol, max_iter, expected_result)
         assert result is None
     else:
         assert abs(result - expected_result) < tol
+        
+        
+@pytest.mark.parametrize("function, derivative, x0, expected_result", [
+    (lambda x: x**2 - 4, lambda x: 2*x, 2, 2), 
+    (lambda x: x**3 - 27, lambda x: 3*x**2, 3, 3),
+    (lambda x: math.cos(x), lambda x: -math.sin(x), 0, math.pi/2),
+])
+def test_newton_raphson(function, derivative, x0, expected_result):
+    result = newton_raphson(function, derivative, x0)
+    assert result == pytest.approx(expected_result, abs=1e-6)
