@@ -1,6 +1,7 @@
 from utils.funcionesaux import *
 from methods.biseccion import bisection_method
 from methods.puntofijo import fixedpoint
+from methods.newtonraphson import newton_raphson
 
 def show_menu():
     print("1. Metodo Punto Fijo")
@@ -21,7 +22,7 @@ def choose_method():
                 parametros_puntofijo = validate_parameters_puntofijo()
                 if parametros_puntofijo is not None:
                     function, x0 = parametros_puntofijo
-                    print(fixedpoint(function, x0, toleration=0.01, iteramax=100))
+                    print(fixedpoint(function, x0, toleration=0.001, iteramax=10))
                 
             elif method == 2:
                 print("\t*** Metodo de Biseccion ***")
@@ -31,9 +32,20 @@ def choose_method():
                 if parametros_biseccion is not None:
                         izquierda, derecha, tol, max_iter = parametros_biseccion
                         print(bisection_method(ecuacion_b, izquierda, derecha, tol, max_iter))
-            elif method ==3:
+            
+            elif method == 3:
+                print("\t*** Metodo de Newton Raphson ***")
+
+                ecuacion = capturar_ecuacion()
+                parametros_newton_raphson = capturar_parametros_newton_raphson()
+                if parametros_newton_raphson is not None:
+                        derivate, x0 = parametros_newton_raphson
+                        print(newton_raphson(ecuacion, derivate, x0, tol=0.001, max_iter=10 ))
+           
+            elif method == 4:
                 mostrar=capturar_ecuacion()
                 print(str(mostrar))
+            
             elif method == 0:
                 print("Saliendo del programa")
                 break
