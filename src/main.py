@@ -6,7 +6,8 @@ from methods.newtonraphson import newton_raphson
 def show_menu():
     print("1. Metodo Punto Fijo")
     print("2. Metodo de Biseccion")
-    print("3")
+    print("3. Metodo de Newton Raphson")
+    print("4. ")
     print("0. Salir")
 
 def choose_method():
@@ -40,7 +41,7 @@ def choose_method():
                 parametros_newton_raphson = capturar_parametros_newton_raphson()
                 if parametros_newton_raphson is not None:
                         derivate, x0 = parametros_newton_raphson
-                        print(newton_raphson(ecuacion, derivate, x0, tol=0.001, max_iter=10 ))
+                        print(newton_raphson(ecuacion, derivate, x0, tolerancia=0.001, max_iter=10 ))
            
             elif method == 4:
                 mostrar=capturar_ecuacion()
