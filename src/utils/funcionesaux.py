@@ -89,12 +89,11 @@ def capturar_parametros_biseccion():
     
     
 def capturar_parametros_newton_raphson():
-
     while True:
         try:
-            derivada = float(input("Introduce la ecuación derivada: "))
+            derivada = input("Introduce la ecuación derivada: ")
             x0 = float(input("Introduce el valor inicial x0: "))
 
             return derivada, x0
         except:
-            print("Por favor introduce valores numéricos para x0 y tol")
+            print("Por favor introduce un valor numérico para x0")
