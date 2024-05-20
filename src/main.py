@@ -2,13 +2,17 @@ from utils.funcionesaux import *
 from methods.biseccion import bisection_method
 from methods.puntofijo import fixedpoint
 
+import numpy as np
+import matplotlib.pyplot as plt
+
 def show_menu():
     print("1. Metodo Punto Fijo")
     print("2. Metodo de Biseccion")
-    print("3")
+    print("3. Metodo secante")
     print("0. Salir")
 
 def choose_method():
+    
     while True:
         show_menu()
         method = input("Ingrese el numero del metodo deseado: ")
@@ -32,8 +36,7 @@ def choose_method():
                         izquierda, derecha, tol, max_iter = parametros_biseccion
                         print(bisection_method(ecuacion_b, izquierda, derecha, tol, max_iter))
             elif method ==3:
-                mostrar=capturar_ecuacion()
-                print(str(mostrar))
+                break
             elif method == 0:
                 print("Saliendo del programa")
                 break
