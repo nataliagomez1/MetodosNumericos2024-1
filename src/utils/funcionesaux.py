@@ -27,8 +27,8 @@ def capturar_ecuacion():
         try:
             ecuacion_str = ecuacion_str.replace("^", "**")  # Reemplazar ^ con ** para potencias
             x = symbols('x')
-            ecuacion = Eq(eval(ecuacion_str.split('=')[0]), 0)
-            return ecuacion        
+            ecuacion = eval(ecuacion_str)
+            return Eq(ecuacion, 0)        
         except Exception as e:
             print("Error al procesar la ecuación:", e)
             print("Por favor, inténtelo nuevamente.")
@@ -91,9 +91,13 @@ def capturar_parametros_biseccion():
 def capturar_parametros_newton_raphson():
     while True:
         try:
-            derivada = input("Introduce la ecuación derivada: ")
+            derivada_str = input("Introduce la ecuación derivada: ")
+            derivada_str = derivada_str.replace("^", "**")  # Reemplazar ^ con ** para potencias
+            x = symbols('x')
+            derivada = eval(derivada_str)
             x0 = float(input("Introduce el valor inicial x0: "))
-
             return derivada, x0
-        except:
-            print("Por favor introduce un valor numérico para x0")
+        except Exception as e:
+            print("Error al procesar los parámetros:", e)
+            print("Por favor introduce los valores nuevamente.")
+            continue
