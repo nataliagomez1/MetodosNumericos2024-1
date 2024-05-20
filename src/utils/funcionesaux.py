@@ -27,8 +27,8 @@ def capturar_ecuacion():
         try:
             ecuacion_str = ecuacion_str.replace("^", "**")  # Reemplazar ^ con ** para potencias
             x = symbols('x')
-            ecuacion = eval(ecuacion_str)
-            return Eq(ecuacion, 0)        
+            ecuacion = Eq(eval(ecuacion_str.split('=')[0]), 0)
+            return ecuacion         
         except Exception as e:
             print("Error al procesar la ecuación:", e)
             print("Por favor, inténtelo nuevamente.")
