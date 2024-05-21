@@ -1,6 +1,7 @@
 from utils.funcionesaux import *
 from methods.biseccion import bisection_method
 from methods.puntofijo import fixedpoint
+from methods.secante import secante 
 
 import numpy as np
 import matplotlib.pyplot as plt
