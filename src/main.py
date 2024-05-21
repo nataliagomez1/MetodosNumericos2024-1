@@ -42,8 +42,9 @@ def choose_method():
                 ecuacion = capturar_ecuacion()
                 parametros_newton_raphson = capturar_parametros_newton_raphson()
                 if parametros_newton_raphson is not None:
-                        derivate, x0 = parametros_newton_raphson
-                        print(newton_raphson(ecuacion, derivate, x0, tolerancia=0.001, max_iter=10 ))
+                        derivada, x0 = parametros_newton_raphson
+                        resultado=(newton_raphson(ecuacion, derivada, x0, tolerancia=0.001, max_iter=10 ))
+                        print(f"La raíz es: {resultado}")
            
             elif method == 4:
                 mostrar=capturar_ecuacion()
