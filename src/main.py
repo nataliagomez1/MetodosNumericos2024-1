@@ -2,6 +2,7 @@ from utils.funcionesaux import *
 from methods.biseccion import bisection_method
 from methods.puntofijo import fixedpoint
 from methods.newtonraphson import newton_raphson
+from GUI.grafica_newton import graficar_ecuacion
 
 def show_menu():
     print("1. Metodo Punto Fijo")
@@ -35,6 +36,7 @@ def choose_method():
                         print(bisection_method(ecuacion_b, izquierda, derecha, tol, max_iter))
             
             elif method == 3:
+                graficar_ecuacion()
                 print("\t*** Metodo de Newton Raphson ***")
 
                 ecuacion = capturar_ecuacion_newton_raphson()
