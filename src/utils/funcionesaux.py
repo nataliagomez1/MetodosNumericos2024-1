@@ -86,3 +86,12 @@ def capturar_parametros_biseccion():
             continue
     
         return izquierda, derecha, tol, max_iter
+
+def capturar_parametros_secante():
+    while True:
+        x0 = float(input("Ingrese el primer valor inicial (x0): "))
+        x1 = float(input("Ingrese el segundo valor inicial (x1): "))
+        tol = float(input("Ingrese la tolerancia (por ejemplo, 0.001): "))
+        max_iter = int(input("Ingrese el número máximo de iteraciones: "))
+        
+            
