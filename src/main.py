@@ -1,6 +1,7 @@
 from utils.funcionesaux import *
 from methods.biseccion import bisection_method
 from methods.puntofijo import fixedpoint
+from GUI.grafica_secante import graficar_ecuacion
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -35,7 +36,10 @@ def choose_method():
                 if parametros_biseccion is not None:
                         izquierda, derecha, tol, max_iter = parametros_biseccion
                         print(bisection_method(ecuacion_b, izquierda, derecha, tol, max_iter))
+
             elif method ==3:
+                graficar_ecuacion()
+
                 break
             elif method == 0:
                 print("Saliendo del programa")
