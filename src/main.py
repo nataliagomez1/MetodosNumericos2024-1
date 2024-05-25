@@ -36,7 +36,6 @@ def choose_method():
                         print(bisection_method(ecuacion_b, izquierda, derecha, tol, max_iter))
             
             elif method == 3:
-                graficar_ecuacion()
                 print("\t*** Metodo de Newton Raphson ***")
 
                 ecuacion = capturar_ecuacion_newton_raphson()
@@ -45,6 +44,8 @@ def choose_method():
                         derivada, x0 = parametros_newton_raphson
                         resultado=(newton_raphson(ecuacion, derivada, x0, tolerancia=0.001, max_iter=10 ))
                         print(f"La raíz es: {resultado}")
+
+                        graficar_ecuacion()
            
             elif method == 4:
                 break
