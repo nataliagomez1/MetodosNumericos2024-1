@@ -47,8 +47,7 @@ def choose_method():
                         print(f"La raíz es: {resultado}")
            
             elif method == 4:
-                mostrar=capturar_ecuacion()
-                print(str(mostrar))
+                break
             
             elif method == 0:
                 print("Saliendo del programa")
