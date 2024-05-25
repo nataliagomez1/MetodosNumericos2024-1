@@ -10,7 +10,8 @@ import matplotlib.pyplot as plt
 def show_menu():
     print("1. Metodo Punto Fijo")
     print("2. Metodo de Biseccion")
-    print("3. Metodo secante")
+    print("3. ")
+    print("4. Metodo secante")
     print("0. Salir")
 
 def choose_method():
@@ -39,7 +40,7 @@ def choose_method():
                         print(bisection_method(ecuacion_b, izquierda, derecha, tol, max_iter))
 
             elif method ==3:
-                graficar_ecuacion()
+                
 
                 break
             elif method == 4:  
@@ -58,6 +59,9 @@ def choose_method():
                         print(f"La raíz aproximada es: {resultado_secante}")
                     else:
                         print("No se encontró una raíz dentro del número máximo de iteraciones permitido.")
+
+                        graficar_ecuacion()
+
             elif method == 0:
                 print("Saliendo del programa")
                 break
