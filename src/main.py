@@ -1,11 +1,8 @@
 from utils.funcionesaux import *
 from methods.biseccion import bisection_method
 from methods.puntofijo import fixedpoint
-<<<<<<< HEAD
-from GUI.grafica_secante import graficar_ecuacion
-=======
 from methods.secante import secante 
->>>>>>> 1a9518bca0e566f87df57bce382397182c638ee6
+from GUI.grafica_secante import graficar_ecuacion
 
 import numpy as np
 import matplotlib.pyplot as plt
