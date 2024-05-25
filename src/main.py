@@ -1,7 +1,11 @@
 from utils.funcionesaux import *
 from methods.biseccion import bisection_method
 from methods.puntofijo import fixedpoint
+<<<<<<< HEAD
 from GUI.grafica_secante import graficar_ecuacion
+=======
+from methods.secante import secante 
+>>>>>>> 1a9518bca0e566f87df57bce382397182c638ee6
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -41,6 +45,22 @@ def choose_method():
                 graficar_ecuacion()
 
                 break
+            elif method == 4:  
+                
+                print("\t*** Método de la Secante ***")
+    
+                ecuacion_s = capturar_ecuacion()
+                parametros_secante = capturar_parametros_secante()
+                if parametros_secante is not None:
+                    x0, x1, tol, max_iter = parametros_secante
+                    def f(x):
+                        return ecuacion_s.subs(symbols('x'), x).evalf()
+
+                    resultado_secante = secante(f, x0, x1, tol, max_iter)
+                    if resultado_secante is not None:
+                        print(f"La raíz aproximada es: {resultado_secante}")
+                    else:
+                        print("No se encontró una raíz dentro del número máximo de iteraciones permitido.")
             elif method == 0:
                 print("Saliendo del programa")
                 break
