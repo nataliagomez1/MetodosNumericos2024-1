@@ -1,6 +1,6 @@
 import sympy as sp
 
-def newton_raphson(ecuacion, derivada, x0, tolerancia=0.001, max_iter=10):
+def newton_raphson(ecuacion, derivada, x0, tolerancia=0.001, max_iter=100):
     
     x = sp.symbols('x')
     

@@ -8,49 +8,49 @@ from methods.newtonraphson import newton_raphson
 
 def graficar(ecuacion, x0):
     try:
-        # Definir la variable simbólica y la ecuación
         x = symbols('x')
         expr = sympify(ecuacion)
-
-        # Calcular la derivada de la ecuación
         derivada = diff(expr, x)
-
-        # Convertir las funciones a funciones numéricas
-        f = lambdify(x, expr, 'numpy')
-        f_prime = lambdify(x, derivada, 'numpy')
-
-        # Encontrar la raíz usando el método de Newton-Raphson
+        
         raiz = newton_raphson(sympify(ecuacion), derivada, x0)
+        
+        if (raiz != None):
+        
+            f = lambdify(x, expr, 'numpy')
+            f_prime = lambdify(x, derivada, 'numpy')
 
-        # Generar valores para graficar
-        x_vals = np.linspace(-10, 10, 400)
-        y_vals = f(x_vals)
-        y_prime_vals = f_prime(x_vals)
+            # Encontrar la raíz usando el método de Newton-Raphson
 
-        # Crear la gráfica
-        plt.figure(figsize=(10, 6))
-        plt.plot(x_vals, y_vals, label=f'f(x) = {ecuacion}')
-        plt.plot(x_vals, y_prime_vals, label=f"f'(x) = {derivada}")
+            # Generar valores para graficar
+            x_vals = np.linspace(-10, 10, 400)
+            y_vals = f(x_vals)
+            y_prime_vals = f_prime(x_vals)
 
-        # Graficar los ejes x e y
-        plt.axhline(0, color='black', linewidth=0.5)
-        plt.axvline(0, color='black', linewidth=0.5)
+            # Crear la gráfica
+            plt.figure(figsize=(10, 6))
+            plt.plot(x_vals, y_vals, label=f'f(x) = {ecuacion}')
+            plt.plot(x_vals, y_prime_vals, label=f"f'(x) = {derivada}")
 
-        # Graficar la raíz encontrada
-        plt.scatter([raiz], [f(raiz)], color='red', zorder=5)
-        plt.text(raiz, f(raiz), f'Raíz: ({raiz:.2f}, {f(raiz):.2f})', fontsize=12, verticalalignment='bottom')
+            # Graficar los ejes x e y
+            plt.axhline(0, color='black', linewidth=0.5)
+            plt.axvline(0, color='black', linewidth=0.5)
 
-        # Añadir etiquetas y título
-        plt.xlabel('x')
-        plt.ylabel('f(x)')
-        plt.title(f'Gráfico de la función y su derivada\nf(x) = {ecuacion}\nRaíz encontrada: ({raiz:.2f}, {f(raiz):.2f})')
+            # Graficar la raíz encontrada
+            plt.scatter([raiz], [f(raiz)], color='red', zorder=5)
+            plt.text(raiz, f(raiz), f'Raíz: ({raiz:.2f}, {f(raiz):.2f})', fontsize=12, verticalalignment='bottom')
 
-        # Mostrar leyenda
-        plt.legend()
-        plt.grid(True)
-        plt.show()
+            # Añadir etiquetas y título
+            plt.xlabel('x')
+            plt.ylabel('f(x)')
+            plt.title(f'Gráfico de la función y su derivada\nf(x) = {ecuacion}\nRaíz encontrada: ({raiz:.2f}, {f(raiz):.2f})')
+
+            # Mostrar leyenda
+            plt.legend()
+            plt.grid(True)
+            plt.show()
+        else:
+            messagebox.showinfo("No se encontro la raiz")
     except Exception as e:
-        print(e)
         messagebox.showerror("Error", f"Error al evaluar la ecuación: {e}")
 
 def graficar_ecuacion():

@@ -1,4 +1,7 @@
-def bisection_method(function, left, right, tol, max_iter):
+import numpy as np
+from sympy import symbols, Eq,lambdify
+
+def bisection_method(func, left, right, tol, max_iter):
     """
     Encuentra la raíz de la función f en el intervalo [a, b] usando el método de bisección.
     
@@ -14,6 +17,11 @@ def bisection_method(function, left, right, tol, max_iter):
     """
     
     iter_count = 0
+    equation = func
+    expression = equation.lhs
+    x = symbols('x')
+    function = lambdify(x, expression, 'numpy')
+    
     while (right - left) / 2 > tol:
         medium = (left + right) / 2
         
