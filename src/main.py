@@ -29,26 +29,26 @@ def choose_method():
             elif method == 2:
                 print("\t*** Metodo de Biseccion ***")
 
-                ecuacion_b = capturar_ecuacion()
+                ecuacion_b = capturar_ecuacion_biseccion()
                 parametros_biseccion = capturar_parametros_biseccion()
                 if parametros_biseccion is not None:
                         izquierda, derecha, tol, max_iter = parametros_biseccion
                         print(bisection_method(ecuacion_b, izquierda, derecha, tol, max_iter))
             
             elif method == 3:
-                graficar_ecuacion()
                 print("\t*** Metodo de Newton Raphson ***")
 
-                ecuacion = capturar_ecuacion()
+                ecuacion = capturar_ecuacion_newton_raphson()
                 parametros_newton_raphson = capturar_parametros_newton_raphson()
                 if parametros_newton_raphson is not None:
                         derivada, x0 = parametros_newton_raphson
                         resultado=(newton_raphson(ecuacion, derivada, x0, tolerancia=0.001, max_iter=10 ))
                         print(f"La raíz es: {resultado}")
+
+                        graficar_ecuacion()
            
             elif method == 4:
-                mostrar=capturar_ecuacion()
-                print(str(mostrar))
+                break
             
             elif method == 0:
                 print("Saliendo del programa")
