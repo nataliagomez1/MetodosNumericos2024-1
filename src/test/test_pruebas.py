@@ -13,6 +13,8 @@ from methods.secante import secante
 from methods.newtonraphson import newton_raphson
 
 
+
+
 import pytest
 import math
 
@@ -45,6 +47,7 @@ def test_bisection_method(function, left, right, tol, max_iter, expected_result)
         
 
 
+
 @pytest.mark.parametrize("function, x0, x1, tol, max_iter, expected_result", [
     (lambda x: x - 2, 0, 4, 1e-6, 100, 2),
     (lambda x: x**2 - 4, 1, 3, 1e-6, 100, 2),
@@ -59,7 +62,6 @@ def test_secante_method(function, x0, x1, tol, max_iter, expected_result):
     else:
         assert result == pytest.approx(expected_result, abs=tol)
 
-        
 @pytest.mark.parametrize("function, derivative, x0, expected_result", [
     (lambda x: x**2 - 4, lambda x: 2*x, 2, 2), 
     (lambda x: x**3 - 27, lambda x: 3*x**2, 3, 3),
@@ -68,4 +70,3 @@ def test_secante_method(function, x0, x1, tol, max_iter, expected_result):
 def test_newton_raphson(function, derivative, x0, expected_result):
     result = newton_raphson(function, derivative, x0)
     assert result == pytest.approx(expected_result, abs=1e-6)
-
