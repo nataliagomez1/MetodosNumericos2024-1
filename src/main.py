@@ -62,14 +62,12 @@ def choose_method():
                 
                 print("\t*** Método de la Secante ***")
     
-                ecuacion_s = capturar_ecuacion()
+                ecuacion_funcion, ecuacion_sympy = capturar_ecuacion_secante()
                 parametros_secante = capturar_parametros_secante()
                 if parametros_secante is not None:
                     x0, x1, tol, max_iter = parametros_secante
-                    def f(x):
-                        return ecuacion_s.subs(symbols('x'), x).evalf()
-
-                    resultado_secante = secante(f, x0, x1, tol, max_iter)
+                    
+                    resultado_secante = secante(ecuacion_funcion, x0, x1, tol, max_iter)
                     if resultado_secante is not None:
                         print(f"La raíz aproximada es: {resultado_secante}")
                     else:
