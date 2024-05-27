@@ -16,6 +16,8 @@ def show_menu():
     print("2. Metodo de Biseccion")
     print("3. Metodo de Newton Raphson")
     print("4. Metodo secante")
+    print("5. Metodo de Jacobi")
+    print("6. Metodo de Gauss-Seidel")
     print("0. Salir")
 
 def choose_method():
@@ -74,6 +76,14 @@ def choose_method():
                         print("No se encontró una raíz dentro del número máximo de iteraciones permitido.")
 
                         graficar_ecuacion()
+                break
+
+            elif method == 5: 
+                break
+
+            elif method == 6: 
+
+                print("\t*** Método de Gauss-Seidel ***")
                 break
             
             elif method == 0:
