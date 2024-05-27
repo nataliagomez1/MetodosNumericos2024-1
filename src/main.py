@@ -16,6 +16,7 @@ def show_menu():
     print("2. Metodo de Biseccion")
     print("3. Metodo de Newton Raphson")
     print("4. Metodo secante")
+    print("5. Metodo de Jacobbi")
     print("0. Salir")
 
 def choose_method():
@@ -74,7 +75,10 @@ def choose_method():
                         print("No se encontró una raíz dentro del número máximo de iteraciones permitido.")
 
                         graficar_ecuacion()
-                 break
+                break
+            elif method == 5:
+                print("Metodo de Jacobi")
+                capturar_parametros_jacobi()
             elif method == 0:
                 print("Saliendo del programa")
                 break

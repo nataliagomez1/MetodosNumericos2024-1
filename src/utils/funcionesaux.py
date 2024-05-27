@@ -1,5 +1,6 @@
 """Funciones auxiliares que sirvan en varios lugares del código, como funciones para graficar, validar entradas, etc."""
 from sympy import symbols, Eq, sqrt
+import numpy as np
     
 def capturar_ecuacion_punto_fijo():
     while True:
@@ -124,3 +125,80 @@ def capturar_parametros_secante():
         except ValueError:
             print("Entrada no válida. Por favor, ingrese valores numéricos válidos.")
 
+def solicitar_numero_de_ecuaciones():
+    while True:
+        try:
+            n = int(input("Ingrese el número de ecuaciones del sistema: "))
+            if n <= 0:
+                raise ValueError("El número de ecuaciones debe ser positivo.")
+            return n
+        except ValueError as e:
+            print(f"Error: {e}. Inténtalo de nuevo.")
+
+def ingresar_ecuaciones():
+    n = solicitar_numero_de_ecuaciones()
+    variables = sp.symbols(f'x1:{n+1}')
+    ecuaciones = []
+    
+    print(f"Ingrese {n} ecuaciones lineales en términos de las variables {variables}:")
+    for i in range(n):
+        while True:
+            try:
+                eq_str = input(f"Ecuación {i+1}: ")
+                eq = sp.sympify(eq_str)
+                if not eq.free_symbols.issubset(set(variables)):
+                    raise ValueError("La ecuación contiene variables no válidas.")
+                ecuaciones.append(eq)
+                break
+            except (sp.SympifyError, ValueError) as e:
+                print(f"Error: {e}. Inténtalo de nuevo.")
+    
+    return ecuaciones, variables
+
+def verificar_y_despejar_ecuaciones():
+    ecuaciones, variables = ingresar_ecuaciones()
+    despejadas = []
+    for i, eq in enumerate(ecuaciones):
+        try:
+            var = variables[i]
+            despejada = sp.solve(eq, var)
+            if len(despejada) != 1:
+                raise ValueError(f"No se pudo despejar una única solución para la variable {var} en la ecuación {i+1}.")
+            despejadas.append(despejada[0])
+        except ValueError as e:
+            print(f"Error: {e}")
+            return None
+    return despejadas, ecuaciones, variables
+
+def capturar_parametros_jacobi():
+    while(True):
+        despejadas, ecuaciones, variables = verificar_y_despejar_ecuaciones()
+        if despejadas is None:
+            print("Hubo un error en el despeje de las ecuaciones. Por favor, verifica las ecuaciones ingresadas")
+            continue
+        for i, eq in enumerate(despejadas):
+            print(f"x{i+1} = {eq}")
+        try:
+            tol = float(input("Ingrese la tolerancia para la convergencia: "))
+            if tol <= 0:
+                print("La tolerancia debe ser un número positivo.")
+                continue
+            max_iter = int(input("Ingrese el número máximo de iteraciones: "))
+            if max_iter <= 0:
+                print("El número máximo de iteraciones debe ser un entero positivo.")
+                continue
+            A = []
+            b = []
+            for eq in ecuaciones:
+                coeficientes = [eq.coeff(var) for var in variables]
+                A.append(coeficientes[:-1])
+                b.append(-coeficientes[-1])
+            x0 = np.zeros(len(A))
+        except ValueError as e:
+            print(f"Error en los parámetros de tolerancia o número de iteraciones: {e}")
+            return
+        return A, b, x0, tol, max_iter
+    
+        
+        
+            
