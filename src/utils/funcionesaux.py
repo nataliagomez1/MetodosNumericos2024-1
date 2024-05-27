@@ -37,6 +37,23 @@ def capturar_ecuacion_newton_raphson():
             return ecuacion_sympy
         except (sp.SympifyError, TypeError):
             print("La ecuación ingresada no es válida. Ingrese una ecuación en términos de x.")
+
+
+
+def capturar_ecuacion_secante():
+    while True:
+        try:
+            ecuacion_input = input("Ingrese la ecuación f(x) en términos de x: ")
+            x = sp.symbols('x')
+            ecuacion_sympy = sp.sympify(ecuacion_input)
+            ecuacion_funcion = sp.lambdify(x, ecuacion_sympy, 'numpy')
+            return ecuacion_funcion, ecuacion_sympy
+        except (sp.SympifyError, TypeError):
+            print("La ecuación ingresada no es válida. Ingrese una ecuación en términos de x.")
+
+
+
+
         
 import sympy as sp
     
