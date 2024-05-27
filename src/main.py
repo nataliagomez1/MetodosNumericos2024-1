@@ -74,7 +74,8 @@ def choose_method():
                         print("No se encontró una raíz dentro del número máximo de iteraciones permitido.")
 
                         graficar_ecuacion()
-                 break
+                break
+            
             elif method == 0:
                 print("Saliendo del programa")
                 break
