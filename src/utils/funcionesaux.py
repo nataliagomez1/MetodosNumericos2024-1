@@ -90,7 +90,6 @@ def capturar_parametros_biseccion():
     
         return izquierda, derecha, tol, max_iter
     
-    
 def capturar_parametros_newton_raphson():
     while True:
         try:
@@ -104,3 +103,24 @@ def capturar_parametros_newton_raphson():
             print("Error al procesar los parámetros:", e)
             print("Por favor introduce los valores nuevamente.")
             continue
+
+def capturar_parametros_secante():
+    while True:
+        try:
+            x0 = float(input("Ingrese el primer valor inicial (x0): "))
+            x1 = float(input("Ingrese el segundo valor inicial (x1): "))
+            if x0 == x1:
+                print("Los valores iniciales no deben ser iguales. Por favor, inténtelo nuevamente.")
+                continue
+            tol = float(input("Ingrese la tolerancia (por ejemplo, 0.00001): "))
+            if tol <= 0:
+                print("La tolerancia debe ser un número positivo. Por favor, inténtelo nuevamente.")
+                continue
+            max_iter = int(input("Ingrese el número máximo de iteraciones: "))
+            if max_iter <= 0:
+                print("El número máximo de iteraciones debe ser un entero positivo. Por favor, inténtelo nuevamente.")
+                continue
+            return x0, x1, tol, max_iter
+        except ValueError:
+            print("Entrada no válida. Por favor, ingrese valores numéricos válidos.")
+

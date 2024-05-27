@@ -1,17 +1,25 @@
 from utils.funcionesaux import *
 from methods.biseccion import bisection_method
 from methods.puntofijo import fixedpoint
+
 from methods.newtonraphson import newton_raphson
 from GUI.grafica_newton import graficar_ecuacion
+from methods.secante import secante 
+from GUI.grafica_secante import graficar_ecuacion
+
+import numpy as np
+import matplotlib.pyplot as plt
+
 
 def show_menu():
     print("1. Metodo Punto Fijo")
     print("2. Metodo de Biseccion")
     print("3. Metodo de Newton Raphson")
-    print("4. ")
+    print("4. Metodo secante")
     print("0. Salir")
 
 def choose_method():
+    
     while True:
         show_menu()
         method = input("Ingrese el numero del metodo deseado: ")
@@ -34,6 +42,7 @@ def choose_method():
                 if parametros_biseccion is not None:
                         izquierda, derecha, tol, max_iter = parametros_biseccion
                         print(bisection_method(ecuacion_b, izquierda, derecha, tol, max_iter))
+
             
             elif method == 3:
                 print("\t*** Metodo de Newton Raphson ***")
@@ -46,10 +55,26 @@ def choose_method():
                         print(f"La raíz es: {resultado}")
 
                         graficar_ecuacion()
-           
-            elif method == 4:
                 break
-            
+            elif method == 4:  
+                
+                print("\t*** Método de la Secante ***")
+    
+                ecuacion_s = capturar_ecuacion()
+                parametros_secante = capturar_parametros_secante()
+                if parametros_secante is not None:
+                    x0, x1, tol, max_iter = parametros_secante
+                    def f(x):
+                        return ecuacion_s.subs(symbols('x'), x).evalf()
+
+                    resultado_secante = secante(f, x0, x1, tol, max_iter)
+                    if resultado_secante is not None:
+                        print(f"La raíz aproximada es: {resultado_secante}")
+                    else:
+                        print("No se encontró una raíz dentro del número máximo de iteraciones permitido.")
+
+                        graficar_ecuacion()
+                 break
             elif method == 0:
                 print("Saliendo del programa")
                 break

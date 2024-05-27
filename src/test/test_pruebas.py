@@ -9,7 +9,10 @@ sys.path.append(ruta_src)
 
 from methods.puntofijo import fixedpoint
 from methods.biseccion import bisection_method
+from methods.secante import secante
 from methods.newtonraphson import newton_raphson
+
+
 
 
 import pytest
@@ -42,7 +45,23 @@ def test_bisection_method(function, left, right, tol, max_iter, expected_result)
     else:
         assert abs(result - expected_result) < tol
         
-        
+
+
+
+@pytest.mark.parametrize("function, x0, x1, tol, max_iter, expected_result", [
+    (lambda x: x - 2, 0, 4, 1e-6, 100, 2),
+    (lambda x: x**2 - 4, 1, 3, 1e-6, 100, 2),
+    (lambda x: math.exp(x) - 2, 0, 1, 1e-6, 100, math.log(2)),
+    (lambda x: x - 5, 0, 4, 1e-6, 5, None),  # Reduciendo el número máximo de iteraciones
+    (lambda x: x**3 - 3*x + 1, -1, 1, 1e-6, 100, pytest.approx(0, abs=1e-4)),  # Ajustando la tolerancia
+])
+def test_secante_method(function, x0, x1, tol, max_iter, expected_result):
+    result = secante(function, x0, x1, tol, max_iter)
+    if expected_result is None:
+        assert result is None
+    else:
+        assert result == pytest.approx(expected_result, abs=tol)
+
 @pytest.mark.parametrize("function, derivative, x0, expected_result", [
     (lambda x: x**2 - 4, lambda x: 2*x, 2, 2), 
     (lambda x: x**3 - 27, lambda x: 3*x**2, 3, 3),
