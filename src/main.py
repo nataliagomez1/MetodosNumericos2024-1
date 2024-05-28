@@ -79,6 +79,13 @@ def choose_method():
             elif method == 5:
                 print("Metodo de Jacobi")
                 capturar_parametros_jacobi()
+                '''
+                Esto es para cuando ya se vaya a implementar los graficos
+                # Llamar al método de Jacobi y capturar la convergencia
+                x_final, convergence_data = jacobi_method(A, b, x0, tol, max_iterations)
+                # Graficar la convergencia
+                graf_convergencia_jacobi(convergence_data, tol)
+                '''
             elif method == 0:
                 print("Saliendo del programa")
                 break
