@@ -10,7 +10,7 @@ def gauss_seidel(A, b, x0=None, tol=1e-5, max_iter=100):
         for i in range(n):
             sum1 = sum(A[i][j] * x_new[j] for j in range(i))
             sum2 = sum(A[i][j] * x[j] for j in range(i + 1, n))
-            x_new[i] = (b[i] - sum1 - sum2) / A[i][j]
+            x_new[i] = (b[i] - sum1 - sum2) / A[i][i]
         
         if np.linalg.norm(x_new - x, ord=np.inf) < tol:
             return x_new
