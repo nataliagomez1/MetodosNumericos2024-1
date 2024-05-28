@@ -1,11 +1,12 @@
 from utils.funcionesaux import *
 from methods.biseccion import bisection_method
 from methods.puntofijo import fixedpoint
+from methods.jacobi import jacobi_method
 
 from methods.newtonraphson import newton_raphson
 from GUI.grafica_newton import graficar_ecuacion
 from methods.secante import secante 
-from GUI.grafica_secante import graficar_ecuacion
+from GUI.grafica_secante import graficar_ecuacion as graficar_secante
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -74,15 +75,28 @@ def choose_method():
                     else:
                         print("No se encontró una raíz dentro del número máximo de iteraciones permitido.")
 
-                        graficar_ecuacion()
+                        graficar_secante()
                 break
             elif method == 5:
-                
                 print("\t*** Metodo de Jacobi ***")
                 
                 parametros_jacobi = capturar_parametros_jacobi()
-                if(parametros_jacobi is not None):
-                    print("resto")
+                if parametros_jacobi is not None:
+                    A, b, x0, tol, max_iter = parametros_jacobi
+                    x = jacobi_method(A, b, x0, tol, max_iter)
+                    if np.any(x != x0):  
+                        print(f"La solución del sistema de ecuaciones es: {x}")
+                    else:
+                        print("El método de Jacobi no logró encontrar una solución diferente de la inicial.")
+                else:
+                    print("Los parámetros no fueron capturados correctamente.")               
+                '''
+                Esto es para cuando ya se vaya a implementar los graficos
+                # Llamar al método de Jacobi y capturar la convergencia
+                x_final, convergence_data = jacobi_method(A, b, x0, tol, max_iterations)
+                # Graficar la convergencia
+                graf_convergencia_jacobi(convergence_data, tol)
+                '''
             elif method == 0:
                 print("Saliendo del programa")
                 break

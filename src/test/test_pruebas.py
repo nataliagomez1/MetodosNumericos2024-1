@@ -2,6 +2,8 @@
 
 import os
 import sys
+import numpy as np
+import pytest
 
 ruta_src = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
@@ -11,6 +13,7 @@ from methods.puntofijo import fixedpoint
 from methods.biseccion import bisection_method
 from methods.secante import secante
 from methods.newtonraphson import newton_raphson
+from methods.jacobi import jacobi_method
 
 
 
@@ -70,3 +73,44 @@ def test_secante_method(function, x0, x1, tol, max_iter, expected_result):
 def test_newton_raphson(function, derivative, x0, expected_result):
     result = newton_raphson(function, derivative, x0)
     assert result == pytest.approx(expected_result, abs=1e-6)
+
+
+
+
+
+@pytest.mark.parametrize("A, b, x0, tol, max_iterations, expected_solution, decimal", [
+    (np.array([[2, 1], [5, 7]], dtype=float),
+     np.array([11, 13], dtype=float),
+     np.zeros(2),
+     0.0001,
+     100,
+     np.array([7.111, -3.222], dtype=float),
+     3),
+
+    (np.array([[10, 1, 1], [2, 10, 1], [2, 2, 10]], dtype=float),
+     np.array([12, 13, 14], dtype=float),
+     np.zeros(3),
+     0.0000000001,
+     100,
+     np.array([1, 1, 1], dtype=float),
+     10),
+
+    (np.array([[4, 1, 2], [3, 5, 1], [1, 1, 3]], dtype=float),
+     np.array([4, 7, 3], dtype=float),
+     np.zeros(3),
+     0.000001,
+     100,
+     np.array([0.5, 1.0, 0.5], dtype=float),
+     6),
+
+    (np.array([[3, 1], [1, 2]], dtype=float),
+     np.array([9, 8], dtype=float),
+     np.zeros(2),
+     0.0000000001,
+     100,
+     np.array([2.0, 3.0], dtype=float),
+     10)
+])
+def test_jacobi(A, b, x0, tol, max_iterations, expected_solution, decimal):
+    x = jacobi_method(A, b, x0, tol, max_iterations)
+    np.testing.assert_almost_equal(x, expected_solution, decimal=decimal)
