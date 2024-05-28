@@ -11,6 +11,7 @@ from methods.puntofijo import fixedpoint
 from methods.biseccion import bisection_method
 from methods.secante import secante
 from methods.newtonraphson import newton_raphson
+from methods.gaussseidel import gauss_seidel
 
 
 
@@ -70,3 +71,22 @@ def test_secante_method(function, x0, x1, tol, max_iter, expected_result):
 def test_newton_raphson(function, derivative, x0, expected_result):
     result = newton_raphson(function, derivative, x0)
     assert result == pytest.approx(expected_result, abs=1e-6)
+    
+import numpy as np
+
+# Prueba para matriz 4x4 
+@pytest.mark.parametrize("A, b, expected_result", [
+    (np.array([[10, -1, 2, 0], [-1, 11, -1, 3], [2, -1, 10, -1], [0, 3, -1, 8]]), 
+     np.array([6, 25, -11, 15]), 
+     np.array([1.0, 2.0, -1.0, 1.0])),
+    (np.array([[4, 1, 2, 0], [3, 5, 1, 1], [1, 1, 3, 1], [0, 2, 1, 4]]), 
+     np.array([4, 7, 3, 6]), 
+     np.array([0.24, 0.76, 0.41, 1.18])),
+    (np.array([[8, 1, 2, 1], [1, 7, 1, 2], [2, 1, 9, 1], [1, 2, 1, 7]]), 
+     np.array([8, 7, 9, 7]), 
+     np.array([0.5891, 0.5124, 0.7681, 0.4632]))
+])
+def test_gauss_seidel_4x4(A, b, expected_result):
+    result = gauss_seidel(A, b, tol=1e-4, max_iter=1000)
+    np.testing.assert_allclose(result, expected_result, rtol=1e-2)
+
