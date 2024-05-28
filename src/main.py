@@ -60,7 +60,7 @@ def choose_method():
                 
                 print("\t*** Método de la Secante ***")
     
-                ecuacion_s = capturar_ecuacion()
+                ecuacion_s = capturar_ecuacion_secante()
                 parametros_secante = capturar_parametros_secante()
                 if parametros_secante is not None:
                     x0, x1, tol, max_iter = parametros_secante
@@ -74,7 +74,7 @@ def choose_method():
                         print("No se encontró una raíz dentro del número máximo de iteraciones permitido.")
 
                         graficar_ecuacion()
-                 break
+                break
             elif method == 0:
                 print("Saliendo del programa")
                 break

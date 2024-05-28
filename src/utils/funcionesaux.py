@@ -23,6 +23,19 @@ def capturar_ecuacion_biseccion():
             return ecuacion_funcion
         except (sp.SympifyError, TypeError):
             print("La ecuación ingresada no es válida. Ingrese una ecuación en términos de x.")
+            
+def capturar_ecuacion_secante():
+   
+    while True:
+        try:
+            print("Ingrese la ecuación en términos de x. Ejemplo: x**2 - 4*x + 4")
+            ecuacion_str = input("f(x) = ")
+            x = sp.symbols('x')
+            ecuacion_sympy = sp.sympify(ecuacion_str)
+            funcion = sp.lambdify(x, ecuacion_sympy, 'numpy')
+            return funcion
+        except (sp.SympifyError, ValueError) as e:
+            print(f"Error en la ecuación: {e}. Inténtelo nuevamente.")
 
 
 
