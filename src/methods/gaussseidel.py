@@ -4,7 +4,7 @@ def gauss_seidel(A, b, x0=None, tol=1e-5, max_iter=100):
     n = len(b)
     x = x0 if x0 is not None else np.zeros(n)
     
-    for k in range(max_iter):
+    for j in range(max_iter):
         x_new = np.copy(x)
         
         for i in range(n):
