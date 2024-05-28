@@ -77,8 +77,12 @@ def choose_method():
                         graficar_ecuacion()
                 break
             elif method == 5:
-                print("Metodo de Jacobi")
-                capturar_parametros_jacobi()
+                
+                print("\t*** Metodo de Jacobi ***")
+                
+                parametros_jacobi = capturar_parametros_jacobi()
+                if(parametros_jacobi is not None):
+                    print("resto")
             elif method == 0:
                 print("Saliendo del programa")
                 break
