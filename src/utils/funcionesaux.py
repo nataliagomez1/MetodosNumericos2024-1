@@ -1,5 +1,5 @@
 """Funciones auxiliares que sirvan en varios lugares del código, como funciones para graficar, validar entradas, etc."""
-from sympy import symbols, Eq, sqrt
+from sympy import symbols, Eq, sqrt, Add
 import numpy as np
     
 def capturar_ecuacion_punto_fijo():
@@ -191,8 +191,20 @@ def capturar_parametros_jacobi():
             b = []
             for eq in ecuaciones:
                 coeficientes = [eq.coeff(var) for var in variables]
-                A.append(coeficientes[:-1])
-                b.append(-coeficientes[-1])
+                A.append(coeficientes)
+                if isinstance(eq, Add):
+                    terms = eq.as_ordered_terms()  # Obtener los términos ordenados
+                else:
+                    raise ValueError("Las expresiones no son del tipo esperado (sympy.Add).")
+
+                termino_constante = 0
+
+                # Recorrer los términos y encontrar el término independiente
+                for term in terms:
+                    if not any(term.has(var) for var in variables):
+                        termino_constante += term
+
+                b.append(termino_constante)
             x0 = np.zeros(len(A))
         except ValueError as e:
             print(f"Error en los parámetros de tolerancia o número de iteraciones: {e}")
