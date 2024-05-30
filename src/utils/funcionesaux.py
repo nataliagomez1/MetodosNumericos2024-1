@@ -210,7 +210,6 @@ def capturar_parametros_gauss_seidel():
                 continue
             A = []
             b = []
-            print(f'{ecuaciones}')
             for eq in ecuaciones:
                 coeficientes = [eq.coeff(var) for var in variables]
                 print(f'{coeficientes}')
@@ -230,8 +229,6 @@ def capturar_parametros_gauss_seidel():
 
                 b.append(termino_constante)
             x0 = np.zeros(len(A))
-            print(f'\n{A}\n')
-            print(f'\n{b}\n')
         except ValueError as e:
             print(f"Error en los parámetros de tolerancia o número de iteraciones: {e}")
             return
