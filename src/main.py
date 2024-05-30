@@ -6,13 +6,13 @@ from methods.newtonraphson import newton_raphson
 from GUI.grafica_newton import graficar_ecuacion
 from methods.secante import secante 
 from GUI.grafica_secante import graficar_ecuacion
+from methods.gaussseidel import gauss_seidel
 
 from methods.gaussseidel import gauss_seidel
 from GUI.grafica_gauss import interfaz_grafica_gauss
 
 import numpy as np
 import matplotlib.pyplot as plt
-
 
 def show_menu():
     print("1. Metodo Punto Fijo")
