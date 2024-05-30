@@ -191,19 +191,8 @@ def capturar_parametros_jacobi():
             b = []
             for eq in ecuaciones:
                 coeficientes = [eq.coeff(var) for var in variables]
+                termino_constante = eq - sum(coef * var for coef, var in zip(coeficientes, variables))
                 A.append(coeficientes)
-                if isinstance(eq, Add):
-                    terms = eq.as_ordered_terms()  # Obtener los términos ordenados
-                else:
-                    raise ValueError("Las expresiones no son del tipo esperado (sympy.Add).")
-
-                termino_constante = 0
-
-                # Recorrer los términos y encontrar el término independiente
-                for term in terms:
-                    if not any(term.has(var) for var in variables):
-                        termino_constante += term
-
                 b.append(termino_constante)
             x0 = np.zeros(len(A))
         except ValueError as e:
