@@ -5,11 +5,13 @@ import numpy as np
 def capturar_ecuacion_punto_fijo():
     while True:
         try:
-            ecuacion_input = input("Ingrese la ecuación g(x) en términos de x: ")
+            ecuacion_input = input("Ingrese la ecuación g(x), ecuacion despejada, en términos de x: ")
             x = sp.symbols('x')
             ecuacion_sympy = sp.sympify(ecuacion_input)
+            derivada_sympy = sp.diff(ecuacion_sympy, x)
             ecuacion_funcion = sp.lambdify(x, ecuacion_sympy, 'numpy')
-            return ecuacion_funcion
+            derivada_funcion = sp.lambdify(x, derivada_sympy, 'numpy')
+            return ecuacion_funcion, derivada_funcion
         except (sp.SympifyError, TypeError):
             print("La ecuación ingresada no es válida. Ingrese una ecuación en términos de x.")
             
@@ -19,11 +21,25 @@ def capturar_ecuacion_biseccion():
         try:
             ecuacion_input = input("Ingrese la ecuación f(x) en términos de x: ")
             x = sp.symbols('x')
-            ecuacion_sympy = sp.sympify(ecuacion_input)
-            ecuacion_funcion = sp.lambdify(x, ecuacion_sympy, 'math')
+            ecuacion_sympy = sp.sympify(ecuacion_input, convert_xor=True)
+            ecuacion_funcion = sp.lambdify(x, ecuacion_sympy, modules=['math', 'sympy'])
             return ecuacion_funcion
-        except (sp.SympifyError, TypeError):
+        except (sp.SympifyError, TypeError, NameError):
             print("La ecuación ingresada no es válida. Ingrese una ecuación en términos de x.")
+
+            
+def capturar_ecuacion_secante():
+   
+    while True:
+        try:
+            print("Ingrese la ecuación en términos de x. Ejemplo: x**2 - 4*x + 4")
+            ecuacion_str = input("f(x) = ")
+            x = sp.symbols('x')
+            ecuacion_sympy = sp.sympify(ecuacion_str)
+            funcion = sp.lambdify(x, ecuacion_sympy, 'numpy')
+            return funcion
+        except (sp.SympifyError, ValueError) as e:
+            print(f"Error en la ecuación: {e}. Inténtelo nuevamente.")
 
 
 
@@ -69,12 +85,12 @@ def validate_parameters_puntofijo():
         tuple or None: Una tupla que contiene la función auxiliar validada y el punto inicial convertido a float,
                        o None si ocurre algún error de validación.
     """
-    function = capturar_ecuacion_punto_fijo()
+    function, derivada = capturar_ecuacion_punto_fijo()
     while True:
         try:
             starting_point = float(input("Ingrese el punto inicial: "))
             #print(f"Imprimir {starting_point:.2f} función {function} ")
-            return function, starting_point
+            return function, derivada, starting_point
         except:
             print("El dato ingresado es invalido")
             print("Ingrese datos numericos ")
@@ -142,7 +158,6 @@ def capturar_parametros_secante():
         except ValueError:
             print("Entrada no válida. Por favor, ingrese valores numéricos válidos.")
 
-
 def solicitar_numero_de_ecuaciones():
     while True:
         try:
@@ -177,32 +192,28 @@ def ingresar_ecuaciones():
 'por consola eliminar los comentarios y comemtar el def'
 #def verificar_y_despejar_ecuaciones(ecuaciones, variables):
 def verificar_y_despejar_ecuaciones():
-    while True:
+    ecuaciones, variables = ingresar_ecuaciones()
+    despejadas = []
+    for i, eq in enumerate(ecuaciones):
         try:
-            ecuaciones, variables = ingresar_ecuaciones()
-            despejadas = []
-            
-            for i, eq in enumerate(ecuaciones):
-                var = variables[i]
-                despejada = sp.solve(eq, var)
-                if len(despejada) != 1:
-                    raise ValueError(f"No se pudo despejar una única solución para la variable {var} en la ecuación {i+1}.")
-                despejadas.append(despejada[0])
-                
-            return despejadas, ecuaciones, variables
-        
+            var = variables[i]
+            despejada = sp.solve(eq, var)
+            if len(despejada) != 1:
+                raise ValueError(f"No se pudo despejar una única solución para la variable {var} en la ecuación {i+1}.")
+            despejadas.append(despejada[0])
         except ValueError as e:
-            print(f"Error: {e}. Por favor, inténtalo de nuevo.")
+            print(f"Error: {e}")
+            return None
+    return despejadas, ecuaciones, variables
 
 def capturar_parametros_gauss_seidel():
-    despejadas, ecuaciones, variables = verificar_y_despejar_ecuaciones()
-    if despejadas is None:
-            print("Hubo un error en el despeje de las ecuaciones. Por favor, verifica las ecuaciones ingresadas")
-    
-    for i, eq in enumerate(despejadas):
-            print(f"x{i+1} = {eq}")
-            
     while(True):
+        despejadas, ecuaciones, variables = verificar_y_despejar_ecuaciones()
+        if despejadas is None:
+            print("Hubo un error en el despeje de las ecuaciones. Por favor, verifica las ecuaciones ingresadas")
+            continue
+        for i, eq in enumerate(despejadas):
+            print(f"x{i+1} = {eq}")
         try:
             tol = float(input("Ingrese la tolerancia para la convergencia: "))
             if tol <= 0:
@@ -214,16 +225,30 @@ def capturar_parametros_gauss_seidel():
                 continue
             A = []
             b = []
+            print(f'{ecuaciones}')
             for eq in ecuaciones:
                 coeficientes = [eq.coeff(var) for var in variables]
-                termino_constante = eq - sum(coef * var for coef, var in zip(coeficientes, variables))
+                print(f'{coeficientes}')
+                print(f'{isinstance(eq, Eq)}')
                 A.append(coeficientes)
+                if isinstance(eq, Add):
+                    terms = eq.as_ordered_terms()  # Obtener los términos ordenados
+                else:
+                    raise ValueError("Las expresiones no son del tipo esperado (sympy.Add).")
+
+                termino_constante = 0
+
+                # Recorrer los términos y encontrar el término independiente
+                for term in terms:
+                    if not any(term.has(var) for var in variables):
+                        termino_constante += term
+
                 b.append(termino_constante)
             x0 = np.zeros(len(A))
-            return A, b, x0, tol, max_iter
-        except (ValueError, TypeError, UnboundLocalError) as e:
-            print(f"Error en los parámetros de tolerancia o número de iteraciones: {e}\n Vuelva a intentar")
-            
-        
+            print(f'\n{A}\n')
+            print(f'\n{b}\n')
+        except ValueError as e:
+            print(f"Error en los parámetros de tolerancia o número de iteraciones: {e}")
+            return
+        return A, b, x0, tol, max_iter
     
-

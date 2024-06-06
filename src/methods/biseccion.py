@@ -15,27 +15,24 @@ def bisection_method(func, left, right, tol, max_iter):
     Returns:
         float: La aproximación de la raíz de f.
     """
-    
+    if func(left) * func(right) >= 0:
+        return "La función debe tener signos opuestos en los extremos izquierdo y derecho. EL METODO DIVERGE"
+
     iter_count = 0
-    equation = func
-    expression = equation.lhs
-    x = symbols('x')
-    function = lambdify(x, expression, 'numpy')
-    
-    while (right - left) / 2 > tol:
+    while (right - left) / 2 > tol and iter_count < max_iter:
         medium = (left + right) / 2
         
-        if function(medium) == 0:
+        if func(medium) == 0:  
             return medium
         
-        if function(medium) * function(left) < 0:
+        if func(medium) * func(left) < 0:
             right = medium  
         else:
             left = medium  
         
         iter_count += 1
-        
-        if iter_count > max_iter:
-            return None
-    
+
+    if iter_count >= max_iter:
+        return "No se encontró la raíz dentro del número máximo de iteraciones. EL METODO DIVERGE"
+
     return (left + right) / 2

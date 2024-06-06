@@ -100,6 +100,5 @@ def choose_method():
         else:
             print("Entrada inválida. Ingrese un número entero.")
 
-
 if __name__ == "__main__":
     choose_method()
