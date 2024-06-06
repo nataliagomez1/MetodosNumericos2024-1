@@ -6,16 +6,21 @@ from methods.newtonraphson import newton_raphson
 from GUI.grafica_newton import graficar_ecuacion
 from methods.secante import secante 
 from GUI.grafica_secante import graficar_ecuacion
+from methods.gaussseidel import gauss_seidel
+
+from methods.gaussseidel import gauss_seidel
+from GUI.grafica_gauss import interfaz_grafica_gauss
 
 import numpy as np
 import matplotlib.pyplot as plt
-
 
 def show_menu():
     print("1. Metodo Punto Fijo")
     print("2. Metodo de Biseccion")
     print("3. Metodo de Newton Raphson")
     print("4. Metodo secante")
+    print("5. Metodo de Jacobi")
+    print("6. Metodo de Gauss-Seidel")
     print("0. Salir")
 
 def choose_method():
@@ -60,14 +65,15 @@ def choose_method():
                 
                 print("\t*** Método de la Secante ***")
     
-                ecuacion_s = capturar_ecuacion_secante()
+
+
+                ecuacion_funcion, ecuacion_sympy = capturar_ecuacion_secante()
+
                 parametros_secante = capturar_parametros_secante()
                 if parametros_secante is not None:
                     x0, x1, tol, max_iter = parametros_secante
-                    def f(x):
-                        return ecuacion_s.subs(symbols('x'), x).evalf()
-
-                    resultado_secante = secante(f, x0, x1, tol, max_iter)
+                    
+                    resultado_secante = secante(ecuacion_funcion, x0, x1, tol, max_iter)
                     if resultado_secante is not None:
                         print(f"La raíz aproximada es: {resultado_secante}")
                     else:
@@ -75,6 +81,19 @@ def choose_method():
 
                         graficar_ecuacion()
                 break
+            elif method == 5:
+                interfaz_grafica_gauss() 
+                break
+
+            elif method == 6: 
+
+                print("\t*** Método de Gauss-Seidel ***")
+                A, b, x0, tol, max_iter = capturar_parametros_gauss_seidel()
+                resultado = (gauss_seidel(A, b, x0, tol, max_iter))
+                print(f"La solución utilizando el método de Gauss-Seidel es: {resultado}")
+                
+                break
+
             elif method == 0:
                 print("Saliendo del programa")
                 break
