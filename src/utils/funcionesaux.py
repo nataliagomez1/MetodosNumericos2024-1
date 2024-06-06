@@ -252,3 +252,33 @@ def capturar_parametros_gauss_seidel():
             return
         return A, b, x0, tol, max_iter
     
+def capturar_parametros_jacobi():
+    while(True):
+        despejadas, ecuaciones, variables = verificar_y_despejar_ecuaciones()
+        if despejadas is None:
+            print("Hubo un error en el despeje de las ecuaciones. Por favor, verifica las ecuaciones ingresadas")
+            continue
+        for i, eq in enumerate(despejadas):
+            print(f"x{i+1} = {eq}")
+        try:
+            tol = float(input("Ingrese la tolerancia para la convergencia: "))
+            if tol <= 0:
+                print("La tolerancia debe ser un número positivo.")
+                continue
+            max_iter = int(input("Ingrese el número máximo de iteraciones: "))
+            if max_iter <= 0:
+                print("El número máximo de iteraciones debe ser un entero positivo.")
+                continue
+            A = []
+            b = []
+            for eq in ecuaciones:
+                coeficientes = [eq.coeff(var) for var in variables]
+                termino_constante = eq - sum(coef * var for coef, var in zip(coeficientes, variables))
+                A.append(coeficientes)
+                b.append(termino_constante)
+            x0 = np.zeros(len(A))
+        except ValueError as e:
+            print(f"Error en los parámetros de tolerancia o número de iteraciones: {e}")
+            return
+        return A, b, x0, tol, max_iter
+    
