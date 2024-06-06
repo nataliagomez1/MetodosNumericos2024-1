@@ -5,11 +5,13 @@ import numpy as np
 def capturar_ecuacion_punto_fijo():
     while True:
         try:
-            ecuacion_input = input("Ingrese la ecuación g(x) en términos de x: ")
+            ecuacion_input = input("Ingrese la ecuación g(x), ecuacion despejada, en términos de x: ")
             x = sp.symbols('x')
             ecuacion_sympy = sp.sympify(ecuacion_input)
+            derivada_sympy = sp.diff(ecuacion_sympy, x)
             ecuacion_funcion = sp.lambdify(x, ecuacion_sympy, 'numpy')
-            return ecuacion_funcion
+            derivada_funcion = sp.lambdify(x, derivada_sympy, 'numpy')
+            return ecuacion_funcion, derivada_funcion
         except (sp.SympifyError, TypeError):
             print("La ecuación ingresada no es válida. Ingrese una ecuación en términos de x.")
             
@@ -52,12 +54,12 @@ def validate_parameters_puntofijo():
         tuple or None: Una tupla que contiene la función auxiliar validada y el punto inicial convertido a float,
                        o None si ocurre algún error de validación.
     """
-    function = capturar_ecuacion_punto_fijo()
+    function, derivada = capturar_ecuacion_punto_fijo()
     while True:
         try:
             starting_point = float(input("Ingrese el punto inicial: "))
             #print(f"Imprimir {starting_point:.2f} función {function} ")
-            return function, starting_point
+            return function, derivada, starting_point
         except:
             print("El dato ingresado es invalido")
             print("Ingrese datos numericos ")

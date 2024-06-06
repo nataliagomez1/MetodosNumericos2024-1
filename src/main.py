@@ -28,13 +28,14 @@ def choose_method():
         if method.isdigit():
             method = int(method)
             if method == 1:
-                print("\t*** Metodo Punto Fijo ***")
+                print("\n\t*** Metodo Punto Fijo ***")
                 
                 #ecuacion= capturar_ecuacion
                 parametros_puntofijo = validate_parameters_puntofijo()
                 if parametros_puntofijo is not None:
-                    function, x0 = parametros_puntofijo
-                    print(fixedpoint(function, x0, toleration=0.001, iteramax=10))
+                    function,derivada, x0 = parametros_puntofijo
+                    print("\n" + fixedpoint(function, derivada, x0, tolerancia=0.001, iteramax=10))
+                    print("\n")
                 
             elif method == 2:
                 print("\t*** Metodo de Biseccion ***")
@@ -53,7 +54,7 @@ def choose_method():
                 parametros_newton_raphson = capturar_parametros_newton_raphson()
                 if parametros_newton_raphson is not None:
                         derivada, x0 = parametros_newton_raphson
-                        resultado=(newton_raphson(ecuacion, derivada, x0, tolerancia=0.001, max_iter=10 ))
+                        resultado=(newton_raphson(ecuacion, derivada, x0, tolerancia=0.001, max_iter=100 ))
                         print(f"La raíz es: {resultado}")
 
                         graficar_ecuacion()
