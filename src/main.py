@@ -58,9 +58,11 @@ def choose_method():
                 if parametros_newton_raphson is not None:
                         derivada, x0 = parametros_newton_raphson
                         resultado=(newton_raphson(ecuacion, derivada, x0, tolerancia=0.001, max_iter=10 ))
-                        print(f"La raíz es: {resultado}")
-
-                        graficar_ecuacion()
+                        if resultado is None:
+                            print("El método de Newton-Raphson no converge para los parámetros dados.")
+                        else:
+                            print(f"La raíz es: {resultado}")
+                            graficar_ecuacion()
                 break
             elif method == 4:  
                 
