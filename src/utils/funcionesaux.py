@@ -19,11 +19,12 @@ def capturar_ecuacion_biseccion():
         try:
             ecuacion_input = input("Ingrese la ecuación f(x) en términos de x: ")
             x = sp.symbols('x')
-            ecuacion_sympy = sp.sympify(ecuacion_input)
-            ecuacion_funcion = sp.lambdify(x, ecuacion_sympy, 'math')
+            ecuacion_sympy = sp.sympify(ecuacion_input, convert_xor=True)
+            ecuacion_funcion = sp.lambdify(x, ecuacion_sympy, modules=['math', 'sympy'])
             return ecuacion_funcion
-        except (sp.SympifyError, TypeError):
+        except (sp.SympifyError, TypeError, NameError):
             print("La ecuación ingresada no es válida. Ingrese una ecuación en términos de x.")
+
             
 def capturar_ecuacion_secante():
    
