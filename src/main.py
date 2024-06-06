@@ -12,6 +12,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
+
 def show_menu():
     print("1. Metodo Punto Fijo")
     print("2. Metodo de Biseccion")
