@@ -1,15 +1,12 @@
 from utils.funcionesaux import *
 from methods.biseccion import bisection_method
 from methods.puntofijo import fixedpoint
+from methods.jacobi import jacobi_method
 
 from methods.newtonraphson import newton_raphson
 from GUI.grafica_newton import graficar_ecuacion
 from methods.secante import secante 
-from GUI.grafica_secante import graficar_ecuacion
-from methods.gaussseidel import gauss_seidel
-
-from methods.gaussseidel import gauss_seidel
-from GUI.grafica_gauss import interfaz_grafica_gauss
+from GUI.grafica_secante import graficar_ecuacion as graficar_secante
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -19,8 +16,7 @@ def show_menu():
     print("2. Metodo de Biseccion")
     print("3. Metodo de Newton Raphson")
     print("4. Metodo secante")
-    print("5. Metodo de Jacobi")
-    print("6. Metodo de Gauss-Seidel")
+    print("5. Metodo de Jacobbi")
     print("0. Salir")
 
 def choose_method():
@@ -31,13 +27,14 @@ def choose_method():
         if method.isdigit():
             method = int(method)
             if method == 1:
-                print("\t*** Metodo Punto Fijo ***")
+                print("\n\t*** Metodo Punto Fijo ***")
                 
                 #ecuacion= capturar_ecuacion
                 parametros_puntofijo = validate_parameters_puntofijo()
                 if parametros_puntofijo is not None:
-                    function, x0 = parametros_puntofijo
-                    print(fixedpoint(function, x0, toleration=0.001, iteramax=10))
+                    function,derivada, x0 = parametros_puntofijo
+                    print("\n" + fixedpoint(function, derivada, x0, tolerancia=0.001, iteramax=10))
+                    print("\n")
                 
             elif method == 2:
                 print("\t*** Metodo de Biseccion ***")
@@ -56,7 +53,7 @@ def choose_method():
                 parametros_newton_raphson = capturar_parametros_newton_raphson()
                 if parametros_newton_raphson is not None:
                         derivada, x0 = parametros_newton_raphson
-                        resultado=(newton_raphson(ecuacion, derivada, x0, tolerancia=0.001, max_iter=10 ))
+                        resultado=(newton_raphson(ecuacion, derivada, x0, tolerancia=0.001, max_iter=100 ))
                         print(f"La raíz es: {resultado}")
 
                         graficar_ecuacion()
@@ -79,21 +76,28 @@ def choose_method():
                     else:
                         print("No se encontró una raíz dentro del número máximo de iteraciones permitido.")
 
-                        graficar_ecuacion()
+                        graficar_secante()
                 break
             elif method == 5:
-                interfaz_grafica_gauss() 
-                break
-
-            elif method == 6: 
-
-                print("\t*** Método de Gauss-Seidel ***")
-                A, b, x0, tol, max_iter = capturar_parametros_gauss_seidel()
-                resultado = (gauss_seidel(A, b, x0, tol, max_iter))
-                print(f"La solución utilizando el método de Gauss-Seidel es: {resultado}")
+                print("\t*** Metodo de Jacobi ***")
                 
-                break
-
+                parametros_jacobi = capturar_parametros_jacobi()
+                if parametros_jacobi is not None:
+                    A, b, x0, tol, max_iter = parametros_jacobi
+                    x = jacobi_method(A, b, x0, tol, max_iter)
+                    if np.any(x != x0):  
+                        print(f"La solución del sistema de ecuaciones es: {x}")
+                    else:
+                        print("El método de Jacobi no logró encontrar una solución diferente de la inicial.")
+                else:
+                    print("Los parámetros no fueron capturados correctamente.")               
+                '''
+                Esto es para cuando ya se vaya a implementar los graficos
+                # Llamar al método de Jacobi y capturar la convergencia
+                x_final, convergence_data = jacobi_method(A, b, x0, tol, max_iterations)
+                # Graficar la convergencia
+                graf_convergencia_jacobi(convergence_data, tol)
+                '''
             elif method == 0:
                 print("Saliendo del programa")
                 break
