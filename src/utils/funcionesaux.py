@@ -177,28 +177,32 @@ def ingresar_ecuaciones():
 'por consola eliminar los comentarios y comemtar el def'
 #def verificar_y_despejar_ecuaciones(ecuaciones, variables):
 def verificar_y_despejar_ecuaciones():
-    ecuaciones, variables = ingresar_ecuaciones()
-    despejadas = []
-    for i, eq in enumerate(ecuaciones):
+    while True:
         try:
-            var = variables[i]
-            despejada = sp.solve(eq, var)
-            if len(despejada) != 1:
-                raise ValueError(f"No se pudo despejar una única solución para la variable {var} en la ecuación {i+1}.")
-            despejadas.append(despejada[0])
+            ecuaciones, variables = ingresar_ecuaciones()
+            despejadas = []
+            
+            for i, eq in enumerate(ecuaciones):
+                var = variables[i]
+                despejada = sp.solve(eq, var)
+                if len(despejada) != 1:
+                    raise ValueError(f"No se pudo despejar una única solución para la variable {var} en la ecuación {i+1}.")
+                despejadas.append(despejada[0])
+                
+            return despejadas, ecuaciones, variables
+        
         except ValueError as e:
-            print(f"Error: {e}")
-            return None
-    return despejadas, ecuaciones, variables
+            print(f"Error: {e}. Por favor, inténtalo de nuevo.")
 
 def capturar_parametros_gauss_seidel():
-    while(True):
-        despejadas, ecuaciones, variables = verificar_y_despejar_ecuaciones()
-        if despejadas is None:
+    despejadas, ecuaciones, variables = verificar_y_despejar_ecuaciones()
+    if despejadas is None:
             print("Hubo un error en el despeje de las ecuaciones. Por favor, verifica las ecuaciones ingresadas")
-            continue
-        for i, eq in enumerate(despejadas):
+    
+    for i, eq in enumerate(despejadas):
             print(f"x{i+1} = {eq}")
+            
+    while(True):
         try:
             tol = float(input("Ingrese la tolerancia para la convergencia: "))
             if tol <= 0:
@@ -212,26 +216,14 @@ def capturar_parametros_gauss_seidel():
             b = []
             for eq in ecuaciones:
                 coeficientes = [eq.coeff(var) for var in variables]
-                print(f'{coeficientes}')
-                print(f'{isinstance(eq, Eq)}')
+                termino_constante = eq - sum(coef * var for coef, var in zip(coeficientes, variables))
                 A.append(coeficientes)
-                if isinstance(eq, Add):
-                    terms = eq.as_ordered_terms()  # Obtener los términos ordenados
-                else:
-                    raise ValueError("Las expresiones no son del tipo esperado (sympy.Add).")
-
-                termino_constante = 0
-
-                # Recorrer los términos y encontrar el término independiente
-                for term in terms:
-                    if not any(term.has(var) for var in variables):
-                        termino_constante += term
-
                 b.append(termino_constante)
             x0 = np.zeros(len(A))
-        except ValueError as e:
-            print(f"Error en los parámetros de tolerancia o número de iteraciones: {e}")
-            return
-        return A, b, x0, tol, max_iter
+            return A, b, x0, tol, max_iter
+        except (ValueError, TypeError, UnboundLocalError) as e:
+            print(f"Error en los parámetros de tolerancia o número de iteraciones: {e}\n Vuelva a intentar")
+            
+        
     
 

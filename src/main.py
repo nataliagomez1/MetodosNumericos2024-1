@@ -88,7 +88,7 @@ def choose_method():
                 print("\t*** Método de Gauss-Seidel ***")
                 A, b, x0, tol, max_iter = capturar_parametros_gauss_seidel()
                 resultado = (gauss_seidel(A, b, x0, tol, max_iter))
-                print(f"La solución utilizando el método de Gauss-Seidel es: {resultado}")
+                print(resultado)
                 
                 break
             
