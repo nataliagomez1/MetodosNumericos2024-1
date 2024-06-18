@@ -1,6 +1,7 @@
 from utils.funcionesaux import *
 from methods.biseccion import bisection_method
 from methods.puntofijo import fixedpoint
+from methods.jacobi import jacobi_method
 
 from methods.newtonraphson import newton_raphson
 from GUI.grafica_newton import graficar_ecuacion
@@ -57,18 +58,17 @@ def choose_method():
                 if parametros_newton_raphson is not None:
                         derivada, x0 = parametros_newton_raphson
                         resultado=(newton_raphson(ecuacion, derivada, x0, tolerancia=0.001, max_iter=10 ))
-                        print(f"La raíz es: {resultado}")
-
-                        graficar_ecuacion()
+                        if resultado is None:
+                            print("El método de Newton-Raphson no converge para los parámetros dados.")
+                        else:
+                            print(f"La raíz es: {resultado}")
+                            graficar_ecuacion()
                 break
             elif method == 4:  
                 
                 print("\t*** Método de la Secante ***")
     
-
-
                 ecuacion_funcion, ecuacion_sympy = capturar_ecuacion_secante()
-
                 parametros_secante = capturar_parametros_secante()
                 if parametros_secante is not None:
                     x0, x1, tol, max_iter = parametros_secante
@@ -81,19 +81,39 @@ def choose_method():
 
                         graficar_ecuacion()
                 break
+
             elif method == 5:
-                interfaz_grafica_gauss() 
+                print("\t*** Metodo de Jacobi ***")
+                
+                parametros_jacobi = capturar_parametros_jacobi()
+                if parametros_jacobi is not None:
+                    A, b, x0, tol, max_iter = parametros_jacobi
+                    x = jacobi_method(A, b, x0, tol, max_iter)
+                    if np.any(x != x0):  
+                        print(f"La solución del sistema de ecuaciones es: {x}")
+                    else:
+                        print("El método de Jacobi no logró encontrar una solución diferente de la inicial.")
+                else:
+                    print("Los parámetros no fueron capturados correctamente.")               
+                '''
+                Esto es para cuando ya se vaya a implementar los graficos
+                # Llamar al método de Jacobi y capturar la convergencia
+                x_final, convergence_data = jacobi_method(A, b, x0, tol, max_iterations)
+                # Graficar la convergencia
+                graf_convergencia_jacobi(convergence_data, tol)
+                '''
+
                 break
 
             elif method == 6: 
-
+                interfaz_grafica_gauss() 
                 print("\t*** Método de Gauss-Seidel ***")
                 A, b, x0, tol, max_iter = capturar_parametros_gauss_seidel()
                 resultado = (gauss_seidel(A, b, x0, tol, max_iter))
-                print(f"La solución utilizando el método de Gauss-Seidel es: {resultado}")
+                print(resultado)
                 
                 break
-
+            
             elif method == 0:
                 print("Saliendo del programa")
                 break
