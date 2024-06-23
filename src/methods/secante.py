@@ -1,4 +1,4 @@
-def secante(f, x0, x1, tol, max_iter):
+def secante(f, x0, x1, tol=0.001, max_iter=10):
     """
     Implementación del método de la secante para encontrar una raíz de la función f.
 
