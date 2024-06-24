@@ -84,6 +84,8 @@ def choose_method():
                 #         graficar_ecuacion()
                 # break
 
+
+
             elif method == 5:
                 print("\t*** Metodo de Jacobi ***")
                 

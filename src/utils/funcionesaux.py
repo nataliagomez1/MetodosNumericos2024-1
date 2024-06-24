@@ -228,8 +228,8 @@ def capturar_parametros_gauss_seidel():
             print(f'{ecuaciones}')
             for eq in ecuaciones:
                 coeficientes = [eq.coeff(var) for var in variables]
-                print(f'{coeficientes}')
-                print(f'{isinstance(eq, Eq)}')
+                #print(f'{coeficientes}')
+                #print(f'{isinstance(eq, Eq)}')
                 A.append(coeficientes)
                 if isinstance(eq, Add):
                     terms = eq.as_ordered_terms()  # Obtener los términos ordenados
@@ -245,8 +245,8 @@ def capturar_parametros_gauss_seidel():
 
                 b.append(termino_constante)
             x0 = np.zeros(len(A))
-            print(f'\n{A}\n')
-            print(f'\n{b}\n')
+            #print(f'\n{A}\n')
+            #print(f'\n{b}\n')
         except ValueError as e:
             print(f"Error en los parámetros de tolerancia o número de iteraciones: {e}")
             return

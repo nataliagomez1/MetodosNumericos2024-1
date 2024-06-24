@@ -11,12 +11,12 @@ def jacobi_method(A, b, x0, tol, max_iterations):
             x_new[i] = (b[i] - s) / A[i][i]
 
         if np.linalg.norm(x_new - x, ord=np.inf) < tol:
-            return x_new
+            return x_new*-1
 
         x = x_new.copy()
     
     print("El método no convergió")
-    return x
+    return x*-1
 
 '''
 Toca modificar un poco el metodo para que retorne lo que se necesita para graficar la convergencia del metodo
