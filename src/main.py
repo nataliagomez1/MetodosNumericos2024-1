@@ -1,6 +1,7 @@
 from utils.funcionesaux import *
 from methods.biseccion import bisection_method
 from methods.puntofijo import fixedpoint
+from GUI.grafica_puntofijo import graficar_ecuacion_punto_fijo
 from methods.jacobi import jacobi_method
 
 from methods.newtonraphson import newton_raphson
@@ -33,12 +34,12 @@ def choose_method():
             method = int(method)
             if method == 1:
                 print("\t*** Metodo Punto Fijo ***")
-                
+                graficar_ecuacion_punto_fijo()
                 #ecuacion= capturar_ecuacion
-                parametros_puntofijo = validate_parameters_puntofijo()
-                if parametros_puntofijo is not None:
-                    function, x0 = parametros_puntofijo
-                    print(fixedpoint(function, x0, toleration=0.001, iteramax=10))
+                # parametros_puntofijo = validate_parameters_puntofijo()
+                # if parametros_puntofijo is not None:
+                #     function, x0 = parametros_puntofijo
+                #     print(fixedpoint(function, x0, toleration=0.001, iteramax=10))
                 
             elif method == 2:
                 print("\t*** Metodo de Biseccion ***")
@@ -67,20 +68,21 @@ def choose_method():
             elif method == 4:  
                 
                 print("\t*** Método de la Secante ***")
+                graficar_ecuacion()
     
-                ecuacion_funcion, ecuacion_sympy = capturar_ecuacion_secante()
-                parametros_secante = capturar_parametros_secante()
-                if parametros_secante is not None:
-                    x0, x1, tol, max_iter = parametros_secante
+                # ecuacion_funcion, ecuacion_sympy = capturar_ecuacion_secante()
+                # parametros_secante = capturar_parametros_secante()
+                # if parametros_secante is not None:
+                #     x0, x1, tol, max_iter = parametros_secante
                     
-                    resultado_secante = secante(ecuacion_funcion, x0, x1, tol, max_iter)
-                    if resultado_secante is not None:
-                        print(f"La raíz aproximada es: {resultado_secante}")
-                    else:
-                        print("No se encontró una raíz dentro del número máximo de iteraciones permitido.")
+                #     resultado_secante = secante(ecuacion_funcion, x0, x1, tol, max_iter)
+                #     if resultado_secante is not None:
+                #         print(f"La raíz aproximada es: {resultado_secante}")
+                #     else:
+                #         print("No se encontró una raíz dentro del número máximo de iteraciones permitido.")
 
-                        graficar_ecuacion()
-                break
+                #         graficar_ecuacion()
+                # break
 
             elif method == 5:
                 print("\t*** Metodo de Jacobi ***")
