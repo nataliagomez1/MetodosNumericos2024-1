@@ -55,13 +55,13 @@ def graficar_ecuacion_punto_fijo():
     etiqueta = tk.Label(ventana, text="Ingrese la ecuación en términos de x:", bg="#f0f0f0")
     etiqueta.pack(pady=10)
 
-    entrada_ecuacion = tk.Entry(ventana, width=30)
+    entrada_ecuacion = tk.Entry(ventana, width=40)
     entrada_ecuacion.pack(pady=10)
 
     etiqueta_x0 = tk.Label(ventana, text="Ingrese el punto inicial x0:", bg="#f0f0f0")
     etiqueta_x0.pack(pady=10)
 
-    entrada_x0 = tk.Entry(ventana, width=30)
+    entrada_x0 = tk.Entry(ventana, width=40)
     entrada_x0.pack(pady=10)
 
     def on_graficar():
@@ -76,3 +76,5 @@ def graficar_ecuacion_punto_fijo():
     boton_graficar.pack(pady=10)
 
     ventana.mainloop()
+
+graficar_ecuacion_punto_fijo()
