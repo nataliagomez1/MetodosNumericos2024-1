@@ -21,11 +21,25 @@ def capturar_ecuacion_biseccion():
         try:
             ecuacion_input = input("Ingrese la ecuación f(x) en términos de x: ")
             x = sp.symbols('x')
-            ecuacion_sympy = sp.sympify(ecuacion_input)
-            ecuacion_funcion = sp.lambdify(x, ecuacion_sympy, 'math')
+            ecuacion_sympy = sp.sympify(ecuacion_input, convert_xor=True)
+            ecuacion_funcion = sp.lambdify(x, ecuacion_sympy, modules=['math', 'sympy'])
             return ecuacion_funcion
-        except (sp.SympifyError, TypeError):
+        except (sp.SympifyError, TypeError, NameError):
             print("La ecuación ingresada no es válida. Ingrese una ecuación en términos de x.")
+
+            
+def capturar_ecuacion_secante():
+   
+    while True:
+        try:
+            print("Ingrese la ecuación en términos de x. Ejemplo: x**2 - 4*x + 4")
+            ecuacion_str = input("f(x) = ")
+            x = sp.symbols('x')
+            ecuacion_sympy = sp.sympify(ecuacion_str)
+            funcion = sp.lambdify(x, ecuacion_sympy, 'numpy')
+            return funcion
+        except (sp.SympifyError, ValueError) as e:
+            print(f"Error en la ecuación: {e}. Inténtelo nuevamente.")
 
 
 
@@ -39,6 +53,23 @@ def capturar_ecuacion_newton_raphson():
             return ecuacion_sympy
         except (sp.SympifyError, TypeError):
             print("La ecuación ingresada no es válida. Ingrese una ecuación en términos de x.")
+
+
+
+def capturar_ecuacion_secante():
+    while True:
+        try:
+            ecuacion_input = input("Ingrese la ecuación f(x) en términos de x: ")
+            x = sp.symbols('x')
+            ecuacion_sympy = sp.sympify(ecuacion_input)
+            ecuacion_funcion = sp.lambdify(x, ecuacion_sympy, 'numpy')
+            return ecuacion_funcion, ecuacion_sympy
+        except (sp.SympifyError, TypeError):
+            print("La ecuación ingresada no es válida. Ingrese una ecuación en términos de x.")
+
+
+
+
         
 import sympy as sp
     
@@ -157,6 +188,9 @@ def ingresar_ecuaciones():
     
     return ecuaciones, variables
 
+'para graficar se necesita que ecuaciones y variables entren como parametro, '
+'por consola eliminar los comentarios y comemtar el def'
+#def verificar_y_despejar_ecuaciones(ecuaciones, variables):
 def verificar_y_despejar_ecuaciones():
     ecuaciones, variables = ingresar_ecuaciones()
     despejadas = []
@@ -172,6 +206,52 @@ def verificar_y_despejar_ecuaciones():
             return None
     return despejadas, ecuaciones, variables
 
+def capturar_parametros_gauss_seidel():
+    while(True):
+        despejadas, ecuaciones, variables = verificar_y_despejar_ecuaciones()
+        if despejadas is None:
+            print("Hubo un error en el despeje de las ecuaciones. Por favor, verifica las ecuaciones ingresadas")
+            continue
+        for i, eq in enumerate(despejadas):
+            print(f"x{i+1} = {eq}")
+        try:
+            tol = float(input("Ingrese la tolerancia para la convergencia: "))
+            if tol <= 0:
+                print("La tolerancia debe ser un número positivo.")
+                continue
+            max_iter = int(input("Ingrese el número máximo de iteraciones: "))
+            if max_iter <= 0:
+                print("El número máximo de iteraciones debe ser un entero positivo.")
+                continue
+            A = []
+            b = []
+            print(f'{ecuaciones}')
+            for eq in ecuaciones:
+                coeficientes = [eq.coeff(var) for var in variables]
+                #print(f'{coeficientes}')
+                #print(f'{isinstance(eq, Eq)}')
+                A.append(coeficientes)
+                if isinstance(eq, Add):
+                    terms = eq.as_ordered_terms()  # Obtener los términos ordenados
+                else:
+                    raise ValueError("Las expresiones no son del tipo esperado (sympy.Add).")
+
+                termino_constante = 0
+
+                # Recorrer los términos y encontrar el término independiente
+                for term in terms:
+                    if not any(term.has(var) for var in variables):
+                        termino_constante += term
+
+                b.append(termino_constante)
+            x0 = np.zeros(len(A))
+            #print(f'\n{A}\n')
+            #print(f'\n{b}\n')
+        except ValueError as e:
+            print(f"Error en los parámetros de tolerancia o número de iteraciones: {e}")
+            return
+        return A, b, x0, tol, max_iter
+    
 def capturar_parametros_jacobi():
     while(True):
         despejadas, ecuaciones, variables = verificar_y_despejar_ecuaciones()
@@ -202,6 +282,3 @@ def capturar_parametros_jacobi():
             return
         return A, b, x0, tol, max_iter
     
-        
-        
-            

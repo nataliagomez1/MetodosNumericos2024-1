@@ -1,24 +1,28 @@
 from utils.funcionesaux import *
 from methods.biseccion import bisection_method
 from methods.puntofijo import fixedpoint
+from GUI.grafica_puntofijo import graficar_ecuacion_punto_fijo
 from methods.jacobi import jacobi_method
 
 from methods.newtonraphson import newton_raphson
 from GUI.grafica_newton import graficar_ecuacion
 from methods.secante import secante 
-from GUI.grafica_secante import graficar_ecuacion as graficar_secante
+from GUI.grafica_secante import graficar_ecuacion
+from methods.gaussseidel import gauss_seidel
+
+from methods.gaussseidel import gauss_seidel
+from GUI.grafica_gauss import interfaz_grafica_gauss
 
 import numpy as np
 import matplotlib.pyplot as plt
-
-
 
 def show_menu():
     print("1. Metodo Punto Fijo")
     print("2. Metodo de Biseccion")
     print("3. Metodo de Newton Raphson")
     print("4. Metodo secante")
-    print("5. Metodo de Jacobbi")
+    print("5. Metodo de Jacobi")
+    print("6. Metodo de Gauss-Seidel")
     print("0. Salir")
 
 def choose_method():
@@ -29,14 +33,13 @@ def choose_method():
         if method.isdigit():
             method = int(method)
             if method == 1:
-                print("\n\t*** Metodo Punto Fijo ***")
-                
+                print("\t*** Metodo Punto Fijo ***")
+                graficar_ecuacion_punto_fijo()
                 #ecuacion= capturar_ecuacion
-                parametros_puntofijo = validate_parameters_puntofijo()
-                if parametros_puntofijo is not None:
-                    function,derivada, x0 = parametros_puntofijo
-                    print("\n" + fixedpoint(function, derivada, x0, tolerancia=0.001, iteramax=10))
-                    print("\n")
+                # parametros_puntofijo = validate_parameters_puntofijo()
+                # if parametros_puntofijo is not None:
+                #     function, x0 = parametros_puntofijo
+                #     print(fixedpoint(function, x0, toleration=0.001, iteramax=10))
                 
             elif method == 2:
                 print("\t*** Metodo de Biseccion ***")
@@ -55,30 +58,34 @@ def choose_method():
                 parametros_newton_raphson = capturar_parametros_newton_raphson()
                 if parametros_newton_raphson is not None:
                         derivada, x0 = parametros_newton_raphson
-                        resultado=(newton_raphson(ecuacion, derivada, x0, tolerancia=0.001, max_iter=100 ))
-                        print(f"La raíz es: {resultado}")
-
-                        graficar_ecuacion()
+                        resultado=(newton_raphson(ecuacion, derivada, x0, tolerancia=0.001, max_iter=10 ))
+                        if resultado is None:
+                            print("El método de Newton-Raphson no converge para los parámetros dados.")
+                        else:
+                            print(f"La raíz es: {resultado}")
+                            graficar_ecuacion()
                 break
             elif method == 4:  
                 
                 print("\t*** Método de la Secante ***")
+                graficar_ecuacion()
     
-                ecuacion_s = capturar_ecuacion()
-                parametros_secante = capturar_parametros_secante()
-                if parametros_secante is not None:
-                    x0, x1, tol, max_iter = parametros_secante
-                    def f(x):
-                        return ecuacion_s.subs(symbols('x'), x).evalf()
+                # ecuacion_funcion, ecuacion_sympy = capturar_ecuacion_secante()
+                # parametros_secante = capturar_parametros_secante()
+                # if parametros_secante is not None:
+                #     x0, x1, tol, max_iter = parametros_secante
+                    
+                #     resultado_secante = secante(ecuacion_funcion, x0, x1, tol, max_iter)
+                #     if resultado_secante is not None:
+                #         print(f"La raíz aproximada es: {resultado_secante}")
+                #     else:
+                #         print("No se encontró una raíz dentro del número máximo de iteraciones permitido.")
 
-                    resultado_secante = secante(f, x0, x1, tol, max_iter)
-                    if resultado_secante is not None:
-                        print(f"La raíz aproximada es: {resultado_secante}")
-                    else:
-                        print("No se encontró una raíz dentro del número máximo de iteraciones permitido.")
+                #         graficar_ecuacion()
+                # break
 
-                        graficar_secante()
-                break
+
+
             elif method == 5:
                 print("\t*** Metodo de Jacobi ***")
                 
@@ -99,6 +106,18 @@ def choose_method():
                 # Graficar la convergencia
                 graf_convergencia_jacobi(convergence_data, tol)
                 '''
+
+                break
+
+            elif method == 6: 
+                interfaz_grafica_gauss() 
+                print("\t*** Método de Gauss-Seidel ***")
+                A, b, x0, tol, max_iter = capturar_parametros_gauss_seidel()
+                resultado = (gauss_seidel(A, b, x0, tol, max_iter))
+                print(resultado)
+                
+                break
+            
             elif method == 0:
                 print("Saliendo del programa")
                 break
