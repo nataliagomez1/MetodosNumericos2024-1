@@ -13,6 +13,10 @@ from methods.gaussseidel import gauss_seidel
 from methods.gaussseidel import gauss_seidel
 from GUI.grafica_gauss import interfaz_grafica_gauss
 
+from GUI.menu import Application
+
+from utils.auxTrapecio import auxTrapecio
+
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -23,6 +27,7 @@ def show_menu():
     print("4. Metodo secante")
     print("5. Metodo de Jacobi")
     print("6. Metodo de Gauss-Seidel")
+    print("7. Metodo del Trapecio")
     print("0. Salir")
 
 def choose_method():
@@ -117,6 +122,9 @@ def choose_method():
                 print(resultado)
                 
                 break
+            elif method == 7:
+                auxTrapecio()
+                break
             
             elif method == 0:
                 print("Saliendo del programa")
@@ -127,4 +135,7 @@ def choose_method():
             print("Entrada inválida. Ingrese un número entero.")
 
 if __name__ == "__main__":
+    #app = Application()
+    #app.mainloop()
+    
     choose_method()
