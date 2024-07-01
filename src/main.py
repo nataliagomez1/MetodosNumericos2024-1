@@ -17,6 +17,9 @@ from GUI.menu import Application
 
 from utils.auxTrapecio import auxTrapecio
 
+from methods.simpson import simpson
+from GUI.grafica_simpson import graficar_ecuacion_simpson
+
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -28,6 +31,7 @@ def show_menu():
     print("5. Metodo de Jacobi")
     print("6. Metodo de Gauss-Seidel")
     print("7. Metodo del Trapecio")
+    print("8. Metodo de Simpson")
     print("0. Salir")
 
 def choose_method():
@@ -125,6 +129,10 @@ def choose_method():
             elif method == 7:
                 auxTrapecio()
                 break
+            elif method == 8:
+                print("\t*** Metodo de Simpson ***")
+                graficar_ecuacion_simpson()
+                                
             
             elif method == 0:
                 print("Saliendo del programa")

@@ -63,6 +63,81 @@ def create_calculator():
         button.grid(row=row+1, column=column, padx=5, pady=5)
 
     root.mainloop()
+def teclado(root,entry):
+    text_var = tk.StringVar()
+    button_texts = [
+        # "+", "-", "*", "/", "^", "√",
+        # "(", ")", ".", "=", "x", "e",
+        # "1", "2", "3", "4", "5", "6",
+        # "7", "8", "9", "0", "borrar", "clear"
+        
+        "7", "8", "9", "/", "^", "√",
+        "4", "5", "6", "=", "x", "e",
+        "1", "2", "3", "+", "-", "*",
+        "0", ".", "(", ")", "borrar", "clear"
+    ]
+    
+    for i, texto in enumerate(button_texts, start=1):
+        if texto.isdigit():
+            button = tk.Button(
+            root, text=texto,
+            command=lambda t=texto: button_action_calc(t, text_var, entry),
+            bg="#464158", fg="white", 
+            activebackground="#9E7682", activeforeground="white",  
+            width=5, height=2, padx=10, pady=5
+            )
+        else:
+            button = tk.Button(
+            root, text=texto,
+            command=lambda t=texto: button_action_calc(t, text_var, entry),
+            bg="#605770", fg="white", 
+            activebackground="#9E7682", activeforeground="white",  
+            width=5, height=2, padx=10, pady=5
+            )
+            
+            
+        
+        row = (i - 1) // 6
+        column = (i - 1) % 6
+        button.grid(row=row+2, column=column+1, padx=5, pady=5)
+
+def teclado_digitos(root,entry):
+    text_var = tk.StringVar()
+    button_texts = [
+        # "+", "-", "*", "/", "^", "√",
+        # "(", ")", ".", "=", "x", "e",
+        # "1", "2", "3", "4", "5", "6",
+        # "7", "8", "9", "0", "borrar", "clear"
+        
+        "7", "8", "9",
+        "4", "5", "6",
+        "1", "2", "3", 
+        "0", "borrar", "clear"
+    ]
+    
+    for i, texto in enumerate(button_texts, start=1):
+        if texto.isdigit():
+            button = tk.Button(
+            root, text=texto,
+            command=lambda t=texto: button_action_calc(t, text_var, entry),
+            bg="#464158", fg="white", 
+            activebackground="#9E7682", activeforeground="white",  
+            width=5, height=2, padx=10, pady=5
+            )
+        else:
+            button = tk.Button(
+            root, text=texto,
+            command=lambda t=texto: button_action_calc(t, text_var, entry),
+            bg="#605770", fg="white", 
+            activebackground="#9E7682", activeforeground="white",  
+            width=5, height=2, padx=10, pady=5
+            )
+            
+            
+        
+        row = (i - 1) // 3
+        column = (i - 1) % 3
+        button.grid(row=row+8, column=column+1, padx=5, pady=5)
 
 def create_gui():
     root = tk.Tk()
