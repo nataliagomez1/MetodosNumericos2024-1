@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import tkinter as tk
 from tkinter import messagebox
 import methods.trapecio as trapecio
+from GUI.calculadora import center_window, teclado, teclado_digitos
 
 def graficar_trapecio(f, a, b, n, result):
     x = np.linspace(a, b, 1000)
@@ -39,7 +40,12 @@ def auxTrapecio():
 
     def calculate_trapecio():
         try:
-            func_str = entry_func.get()
+            ecuacion = entrada_ecuacion.get()
+            ecuacion = ecuacion.replace("√", "sqrt")
+            ecuacion = ecuacion.replace("e", "2.7182818284")
+            ecuacion = ecuacion.replace("^", "**")
+        
+            func_str = str(ecuacion)
             f = str_to_func(func_str)
             if f is None:
                 return
@@ -61,25 +67,42 @@ def auxTrapecio():
 
     app = tk.Tk()
     app.title("Método del Trapecio")
+    window_width = 580
+    window_height = 630
+    app.geometry(f"{window_width}x{window_height}")
+    center_window(app, window_width, window_height)
 
-    tk.Label(app, text="Función (en términos de x):").grid(row=0, column=0)
-    entry_func = tk.Entry(app)
-    entry_func.grid(row=0, column=1)
+    app.configure(bg="#f0f0f0")
+    
+    etiqueta = tk.Label(app, text="Ingrese la ecuación en términos de x:", bg="#f0f0f0")
+    etiqueta.grid(row=0, column=2, columnspan=6)
 
-    tk.Label(app, text="Inicio del intervalo (a):").grid(row=1, column=0)
+    def validate_entry_ecu(new_value):
+        allowed_chars = "0123456789x√().+-*/^e"
+        for char in new_value:
+            if char not in allowed_chars:
+                return False
+        return True
+
+    vcmdecu = (app.register(validate_entry_ecu), '%P')
+    entrada_ecuacion = tk.Entry(app, width=40, validate='key', validatecommand=vcmdecu)
+    entrada_ecuacion.grid(row=1, column=2, columnspan=6)
+    
+    teclado(app,entrada_ecuacion)
+
+    tk.Label(app, text="Limite inferior (a):").grid(row=8, column=2, columnspan=6)
     entry_a = tk.Entry(app)
-    entry_a.grid(row=1, column=1)
+    entry_a.grid(row=9, column=2, columnspan=6)
 
-    tk.Label(app, text="Fin del intervalo (b):").grid(row=2, column=0)
+    tk.Label(app, text="Limite superior (b):").grid(row=10, column=2, columnspan=6)
     entry_b = tk.Entry(app)
-    entry_b.grid(row=2, column=1)
+    entry_b.grid(row=11, column=2, columnspan=6)
 
-    tk.Label(app, text="Número de trapecios (n):").grid(row=3, column=0)
+    tk.Label(app, text="Número de trapecios (n):").grid(row=12, column=2, columnspan=6)
     entry_n = tk.Entry(app)
-    entry_n.grid(row=3, column=1)
+    entry_n.grid(row=13, column=2, columnspan=6)
 
     calculate_button = tk.Button(app, text="Calcular", command=calculate_trapecio)
-    calculate_button.grid(row=4, columnspan=2)
+    calculate_button.grid(row=15, columnspan=6, column=2)
 
     app.mainloop()
-
