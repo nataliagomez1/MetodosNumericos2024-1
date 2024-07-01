@@ -190,8 +190,8 @@ def ingresar_ecuaciones():
 
 'para graficar se necesita que ecuaciones y variables entren como parametro, '
 'por consola eliminar los comentarios y comemtar el def'
-#def verificar_y_despejar_ecuaciones(ecuaciones, variables):
-def verificar_y_despejar_ecuaciones():
+def verificar_y_despejar_ecuaciones(ecuaciones, variables):
+#def verificar_y_despejar_ecuaciones():
     ecuaciones, variables = ingresar_ecuaciones()
     despejadas = []
     for i, eq in enumerate(ecuaciones):

@@ -2,15 +2,41 @@ import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
 
+import GUI.grafica_trapecio as trapecio
+import GUI.grafica_puntofijo as punto_fijo
+import GUI.grafica_newton as newton
+import GUI.grafica_secante as secante
+import GUI.grafica_gauss as gauss
+import GUI.grafica_jacobi as jacobi
+
 # Nombres de los botones e imágenes
 button_names = ['Punto fijo', 'Biseccion', 'New Raphson', 'Secante', 'Jacobi', 
-                'Gauss-Seidel', 'Simpomp', 'Trapezio', 'Euler', 'Expo']
+                'Gauss-Seidel', 'Simpon', 'Trapecio', 'Euler', 'Expo']
 
 # Rutas de las imágenes
-image_paths = [f'image.png' for i in range(1, 11)]
+image_paths = [f'./Recursos/image{i}.png' for i in range(1, 11)]
 
 def on_button_click(button_name):
-    print(f'{button_name} clicked')
+    if(button_name == 'Trapecio'):
+        trapecio.auxTrapecio()
+    elif(button_name == 'Punto fijo'):
+        punto_fijo.graficar_ecuacion_punto_fijo() 
+    elif(button_name == 'Biseccion'):
+        punto_fijo.graficar_ecuacion_punto_fijo() #FALTA
+    elif(button_name == 'New Raphson'):
+        newton.graficar_ecuacion()
+    elif(button_name == 'Secante'):
+        secante.graficar_ecuacion()
+    elif(button_name == 'Jacobi'):
+        jacobi.graficar_jacobi()
+    elif(button_name == 'Gauss-Seidel'):
+        gauss.interfaz_grafica_gauss()
+    elif(button_name == 'Simpon'):
+        punto_fijo.graficar_ecuacion_punto_fijo() #FALTA
+    elif(button_name == 'Euler'):
+        punto_fijo.graficar_ecuacion_punto_fijo() #FALTA
+    elif(button_name == 'Expo'):
+        punto_fijo.graficar_ecuacion_punto_fijo() #FALTA
 
 class Application(tk.Tk):
     def __init__(self):
@@ -38,7 +64,7 @@ class Application(tk.Tk):
             frame.grid(row=row, column=col, padx=10, pady=10, sticky='nsew')
 
             image = Image.open(image_paths[index])
-            image = image.resize((50, 50), Image.LANCZOS)
+            image = image.resize((120, 120), Image.LANCZOS)
             photo = ImageTk.PhotoImage(image)
 
             button = ttk.Button(frame, text=button_names[index], image=photo, compound='top',

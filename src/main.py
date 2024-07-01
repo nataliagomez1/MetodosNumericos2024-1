@@ -5,7 +5,7 @@ from GUI.grafica_puntofijo import graficar_ecuacion_punto_fijo
 from methods.jacobi import jacobi_method
 
 from methods.newtonraphson import newton_raphson
-from GUI.grafica_newton import graficar_ecuacion
+from GUI.grafica_newton import graficar_ecuacion as newton
 from methods.secante import secante 
 from GUI.grafica_secante import graficar_ecuacion
 from methods.gaussseidel import gauss_seidel
@@ -15,7 +15,7 @@ from GUI.grafica_gauss import interfaz_grafica_gauss
 
 from GUI.menu import Application
 
-from utils.auxTrapecio import auxTrapecio
+from GUI.grafica_trapecio import auxTrapecio
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -68,7 +68,7 @@ def choose_method():
                             print("El método de Newton-Raphson no converge para los parámetros dados.")
                         else:
                             print(f"La raíz es: {resultado}")
-                            graficar_ecuacion()
+                            newton()
                 break
             elif method == 4:  
                 
@@ -104,13 +104,13 @@ def choose_method():
                         print("El método de Jacobi no logró encontrar una solución diferente de la inicial.")
                 else:
                     print("Los parámetros no fueron capturados correctamente.")               
-                '''
-                Esto es para cuando ya se vaya a implementar los graficos
+                
+                #Esto es para cuando ya se vaya a implementar los graficos
                 # Llamar al método de Jacobi y capturar la convergencia
-                x_final, convergence_data = jacobi_method(A, b, x0, tol, max_iterations)
+                #x_final, convergence_data = jacobi_method(A, b, x0, tol, max_iterations)
                 # Graficar la convergencia
-                graf_convergencia_jacobi(convergence_data, tol)
-                '''
+                #graf_convergencia_jacobi(convergence_data, tol)
+                
 
                 break
 
@@ -135,7 +135,7 @@ def choose_method():
             print("Entrada inválida. Ingrese un número entero.")
 
 if __name__ == "__main__":
-    #app = Application()
-    #app.mainloop()
+    app = Application()
+    app.mainloop()
     
-    choose_method()
+    #choose_method()
