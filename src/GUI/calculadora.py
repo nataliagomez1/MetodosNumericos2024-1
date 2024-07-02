@@ -4,6 +4,7 @@ def button_action(button_number):
     print(f"Button {button_number} clicked: Action {button_number}")
     if button_number == 1:
         create_calculator()
+        
 
 def button_action_calc(button_text, text_var, entry):
     print(f"Button {button_text} clicked: Action {button_text}")

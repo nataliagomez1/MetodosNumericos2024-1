@@ -143,7 +143,7 @@ def choose_method():
             print("Entrada inválida. Ingrese un número entero.")
 
 if __name__ == "__main__":
-    app = Application()
-    app.mainloop()
+    # app = Application()
+    # app.mainloop()
     
-    #choose_method()
+    choose_method()

@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sympy import symbols, lambdify, sympify
 from methods.simpson import simpson
-from GUI.calculadora import center_window, teclado, teclado_digitos
+from GUI.calculadora import center_window, teclado
 
 def graficar_simpson(ecuacion, a, b, n):
     try:
@@ -14,17 +14,23 @@ def graficar_simpson(ecuacion, a, b, n):
         expr = sympify(ecuacion)
         f = lambdify(x, expr, 'numpy')
 
-        resultado = simpson(f, a, b, n)
+        resultado, x_vals, y_vals = simpson(f, a, b, n)
+  
+        plt.figure(figsize=(10, 6))
 
-        x_vals = np.linspace(a, b, 400)
-        y_vals = f(x_vals)
-        plt.subplots(figsize=(10, 6))
         plt.plot(x_vals, y_vals, label=f'f(x) = {ecuacion}')
 
-        # Rellenar el área bajo la curva
         x_fill = np.linspace(a, b, 1000)
         y_fill = f(x_fill)
         plt.fill_between(x_fill, y_fill, alpha=0.3)
+        
+        for i in range(0, n, 2):
+            xi = x_vals[i:i+3]
+            yi = y_vals[i:i+3]
+            poly = np.polyfit(xi, yi, 2)
+            p = np.poly1d(poly)
+            x_interval = np.linspace(xi[0], xi[-1], 100)
+            plt.plot(x_interval, p(x_interval), 'r--')
 
         plt.axhline(0, color='black', linewidth=0.5)
         plt.axvline(0, color='black', linewidth=0.5)
@@ -43,15 +49,21 @@ def graficar_simpson(ecuacion, a, b, n):
 def graficar_ecuacion_simpson():
     ventana = tk.Tk()
     ventana.title("Graficador de Ecuaciones - Método de Simpson")
-    window_width = 580
-    window_height = 630
+    window_width = 800
+    window_height = 430
     ventana.geometry(f"{window_width}x{window_height}")
     center_window(ventana, window_width, window_height)
 
     ventana.configure(bg="#f0f0f0")
 
-    etiqueta = tk.Label(ventana, text="Ingrese la ecuación en términos de x:", bg="#f0f0f0")
-    etiqueta.grid(row=0, column=2, columnspan=6)
+    frame_izquierdo = tk.Frame(ventana, bg="#f0f0f0")
+    frame_izquierdo.pack(side=tk.LEFT, padx=20, pady=20)
+
+    frame_derecho = tk.Frame(ventana, bg="#f0f0f0")
+    frame_derecho.pack(side=tk.RIGHT, padx=20, pady=20)
+
+    etiqueta_ecuacion = tk.Label(frame_izquierdo, text="Ingrese la ecuación en términos de x:", bg="#f0f0f0")
+    etiqueta_ecuacion.grid(row=0, column=0, padx=10, pady=10)
 
     def validate_entry_ecu(new_value):
         allowed_chars = "0123456789x√().+-*/^e"
@@ -61,13 +73,11 @@ def graficar_ecuacion_simpson():
         return True
 
     vcmdecu = (ventana.register(validate_entry_ecu), '%P')
-    entrada_ecuacion = tk.Entry(ventana, width=40, validate='key', validatecommand=vcmdecu)
-    entrada_ecuacion.grid(row=1, column=2, columnspan=6)
-    
-    teclado(ventana,entrada_ecuacion)
-    
-    etiqueta_a = tk.Label(ventana, text="Ingrese el límite inferior a:", bg="#f0f0f0")
-    etiqueta_a.grid(row=8, column=2, columnspan=6)
+    entrada_ecuacion = tk.Entry(frame_izquierdo, width=40, validate='key', validatecommand=vcmdecu)
+    entrada_ecuacion.grid(row=1, column=0, padx=10, pady=10)
+
+    etiqueta_a = tk.Label(frame_izquierdo, text="Ingrese el límite inferior a:", bg="#f0f0f0")
+    etiqueta_a.grid(row=2, column=0, padx=10, pady=10)
 
     def validate_entry_limite(new_value):
         if new_value == "":
@@ -79,22 +89,23 @@ def graficar_ecuacion_simpson():
             return False
 
     vcmda = (ventana.register(validate_entry_limite), '%P')
-    entrada_a = tk.Entry(ventana, width=40, validate='key', validatecommand=vcmda)
-    entrada_a.grid(row=9, column=2, columnspan=6)
-    
-    etiqueta_b = tk.Label(ventana, text="Ingrese el límite superior b:", bg="#f0f0f0")
-    etiqueta_b.grid(row=10, column=2, columnspan=6)
+    entrada_a = tk.Entry(frame_izquierdo, width=40, validate='key', validatecommand=vcmda)
+    entrada_a.grid(row=3, column=0, padx=10, pady=10)
+
+    etiqueta_b = tk.Label(frame_izquierdo, text="Ingrese el límite superior b:", bg="#f0f0f0")
+    etiqueta_b.grid(row=4, column=0, padx=10, pady=10)
 
     vcmdb = (ventana.register(validate_entry_limite), '%P')
-    entrada_b = tk.Entry(ventana, width=40, validate='key', validatecommand=vcmdb)
-    entrada_b.grid(row=11, column=2, columnspan=6)
+    entrada_b = tk.Entry(frame_izquierdo, width=40, validate='key', validatecommand=vcmdb)
+    entrada_b.grid(row=5, column=0, padx=10, pady=10)
 
-    etiqueta_n = tk.Label(ventana, text="Ingrese el número de subintervalos n (par):", bg="#f0f0f0")
-    etiqueta_n.grid(row=12, column=2, columnspan=6)
+    etiqueta_n = tk.Label(frame_izquierdo, text="Ingrese el número de subintervalos n (par):", bg="#f0f0f0")
+    etiqueta_n.grid(row=6, column=0, padx=10, pady=10)
 
-    
-    entrada_n = tk.Entry(ventana, width=40)
-    entrada_n.grid(row=13, column=2, columnspan=6)
+    entrada_n = tk.Entry(frame_izquierdo, width=40)
+    entrada_n.grid(row=7, column=0, padx=10, pady=10)
+
+    teclado(frame_derecho, entrada_ecuacion)
 
     def on_graficar():
         ecuacion = entrada_ecuacion.get()
@@ -109,8 +120,8 @@ def graficar_ecuacion_simpson():
         except ValueError:
             messagebox.showerror("Error", "Los límites y el número de subintervalos deben ser valores válidos")
 
-    boton_graficar = tk.Button(ventana, text="Graficar", command=on_graficar, bg="#4CAF50", fg="white")
-    boton_graficar.grid(row=14, column=2, columnspan=6)
+    boton_graficar = tk.Button(frame_izquierdo, text="Graficar", command=on_graficar, bg="#4CAF50", fg="white")
+    boton_graficar.grid(row=8, column=0, padx=10, pady=10)
 
     ventana.mainloop()
 

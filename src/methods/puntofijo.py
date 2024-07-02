@@ -3,7 +3,7 @@
 import numpy as np
 from sympy import symbols, Eq, lambdify, sqrt
 
-def fixedpoint(function, derivada, x0, tolerancia=0.001, iteramax=20):
+def fixedpoint(function, derivada, x0, tolerancia=0.001, iteramax=10):
 
     iteration = 1
     error = 1

@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from sympy import symbols, lambdify, sympify
 
 from methods.puntofijo import fixedpoint
-from GUI.calculadora import center_window, teclado, teclado_digitos
+from GUI.calculadora import teclado,center_window
 
 def graficar_punto_fijo(ecuacion, x0):
     try:
@@ -51,45 +51,30 @@ def graficar_punto_fijo(ecuacion, x0):
 def graficar_ecuacion_punto_fijo():
     ventana = tk.Tk()
     ventana.title("Graficador de Ecuaciones - Punto Fijo")
-    window_width = 580
-    window_height = 530
+    window_width = 800
+    window_height = 430
     ventana.geometry(f"{window_width}x{window_height}")
     center_window(ventana, window_width, window_height)
-    ventana.configure(bg="#f0f0f0")
 
-    etiqueta = tk.Label(ventana, text="Ingrese la ecuación en términos de x:", bg="#f0f0f0")
-    etiqueta.grid(row=0, column=2, columnspan=6)
+    frame_izquierdo = tk.Frame(ventana, bg="#f0f0f0")
+    frame_izquierdo.pack(side=tk.LEFT, padx=20, pady=20)
 
-    def validate_entry_ecu(new_value):
-        allowed_chars = "0123456789x√().+-*/^e"
-        for char in new_value:
-            if char not in allowed_chars:
-                return False
-        return True
+    frame_derecho = tk.Frame(ventana, bg="#f0f0f0")
+    frame_derecho.pack(side=tk.RIGHT, padx=20, pady=20)
 
-    vcmdecu = (ventana.register(validate_entry_ecu), '%P')
-    entrada_ecuacion = tk.Entry(ventana, width=40, validate='key', validatecommand=vcmdecu)
-    entrada_ecuacion.grid(row=1, column=2, columnspan=6)
+    etiqueta_ecuacion = tk.Label(frame_izquierdo, text="Ingrese la ecuación en términos de x:", bg="#f0f0f0")
+    etiqueta_ecuacion.grid(row=0, column=0, padx=10, pady=10)
+
+    entrada_ecuacion = tk.Entry(frame_izquierdo, width=40)
+    entrada_ecuacion.grid(row=1, column=0, padx=10, pady=10)
     
-    teclado(ventana, entrada_ecuacion)
+    etiqueta_x0 = tk.Label(frame_izquierdo, text="Ingrese el punto inicial x0:", bg="#f0f0f0")
+    etiqueta_x0.grid(row=2, column=0, padx=10, pady=10)
 
-    etiqueta_x0 = tk.Label(ventana, text="Ingrese el punto inicial x0:", bg="#f0f0f0")
-    etiqueta_x0.grid(row=7, column=2, columnspan=6)
+    entrada_x0 = tk.Entry(frame_izquierdo, width=40)
+    entrada_x0.grid(row=3, column=0, padx=10, pady=10)
 
-    def validate_entry_x0(new_value):
-        if new_value == "":
-            return True
-        try:
-            float(new_value)
-            return True
-        except ValueError:
-            return False
-
-    vcmdx0 = (ventana.register(validate_entry_x0), '%P')
-    entrada_x0 = tk.Entry(ventana, width=40, validate='key', validatecommand=vcmdx0)
-    entrada_x0.grid(row=8, column=2, columnspan=6)
-    
-    #teclado_digitos(ventana,entrada_x0)
+    teclado(frame_derecho, entrada_ecuacion)
 
     def on_graficar():
         ecuacion = entrada_ecuacion.get()
@@ -99,8 +84,8 @@ def graficar_ecuacion_punto_fijo():
         except ValueError:
             messagebox.showerror("Error", "El punto inicial x0 debe ser un número válido")
 
-    boton_graficar = tk.Button(ventana, text="Graficar", command=on_graficar, bg="#4CAF50", fg="white")
-    boton_graficar.grid(row=10, column=2, columnspan=6)
+    boton_graficar = tk.Button(frame_izquierdo, text="Graficar", command=on_graficar, bg="#4CAF50", fg="white")
+    boton_graficar.grid(row=4, column=0, padx=10, pady=10)
 
     ventana.mainloop()
 
