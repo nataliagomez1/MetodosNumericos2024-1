@@ -8,6 +8,7 @@ import GUI.grafica_newton as newton
 import GUI.grafica_secante as secante
 import GUI.grafica_gauss as gauss
 import GUI.grafica_jacobi as jacobi
+import GUI.grafica_simpson as simpson
 
 # Nombres de los botones e imágenes
 button_names = ['Punto fijo', 'Biseccion', 'New Raphson', 'Secante', 'Jacobi', 
@@ -32,7 +33,7 @@ def on_button_click(button_name):
     elif(button_name == 'Gauss-Seidel'):
         gauss.interfaz_grafica_gauss()
     elif(button_name == 'Simpon'):
-        punto_fijo.graficar_ecuacion_punto_fijo() #FALTA
+        simpson.graficar_ecuacion_simpson()
     elif(button_name == 'Euler'):
         punto_fijo.graficar_ecuacion_punto_fijo() #FALTA
     elif(button_name == 'Expo'):

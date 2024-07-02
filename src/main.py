@@ -127,6 +127,7 @@ def choose_method():
                 
                 break
             elif method == 7:
+                print("\t*** Metodo de Simpson ***")
                 auxTrapecio()
                 break
             elif method == 8:
