@@ -127,6 +127,7 @@ def choose_method():
                 
                 break
             elif method == 7:
+                print("\t*** Metodo de Simpson ***")
                 auxTrapecio()
                 break
             elif method == 8:
@@ -143,7 +144,7 @@ def choose_method():
             print("Entrada inválida. Ingrese un número entero.")
 
 if __name__ == "__main__":
-    # app = Application()
-    # app.mainloop()
+    app = Application()
+    app.mainloop()
     
-    choose_method()
+    #choose_method()

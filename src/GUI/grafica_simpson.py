@@ -27,10 +27,9 @@ def graficar_simpson(ecuacion, a, b, n):
         for i in range(0, n, 2):
             xi = x_vals[i:i+3]
             yi = y_vals[i:i+3]
-            poly = np.polyfit(xi, yi, 2)
-            p = np.poly1d(poly)
             x_interval = np.linspace(xi[0], xi[-1], 100)
-            plt.plot(x_interval, p(x_interval), 'r--')
+            plt.plot(x_interval, [f(x) for x in x_interval], 'r--')  
+            plt.bar(xi, [f(x) for x in xi], width=(xi[-1] - xi[0]) / 3, alpha=0.3, align='edge')
 
         plt.axhline(0, color='black', linewidth=0.5)
         plt.axvline(0, color='black', linewidth=0.5)

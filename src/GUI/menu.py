@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
 
+from GUI.calculadora import center_window
 import GUI.grafica_trapecio as trapecio
 import GUI.grafica_puntofijo as punto_fijo
 import GUI.grafica_newton as newton
@@ -12,7 +13,7 @@ import GUI.grafica_simpson as simpson
 
 # Nombres de los botones e imágenes
 button_names = ['Punto fijo', 'Biseccion', 'New Raphson', 'Secante', 'Jacobi', 
-                'Gauss-Seidel', 'Simpon', 'Trapecio', 'Euler', 'Expo']
+                'Gauss-Seidel', 'Simpson', 'Trapecio', 'Euler', 'Expo']
 
 # Rutas de las imágenes
 image_paths = [f'./Recursos/image{i}.png' for i in range(1, 11)]
@@ -33,7 +34,7 @@ def on_button_click(button_name):
     elif(button_name == 'Gauss-Seidel'):
         gauss.interfaz_grafica_gauss()
     elif(button_name == 'Simpson'):
-        simpson.graficar_ecuacion_simpson() #FALTA
+        simpson.graficar_ecuacion_simpson()
     elif(button_name == 'Euler'):
         punto_fijo.graficar_ecuacion_punto_fijo() #FALTA
     elif(button_name == 'Expo'):
@@ -43,8 +44,12 @@ class Application(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Menu with Buttons")
-        self.geometry("800x400")
+        #self.geometry("800x400")
         self.create_widgets()
+        window_width = 800
+        window_height = 400
+        self.geometry(f"{window_width}x{window_height}")
+        center_window(self, window_width, window_height)
 
     def create_widgets(self):
         # Añadir el título
