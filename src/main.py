@@ -23,6 +23,9 @@ from GUI.grafica_simpson import graficar_ecuacion_simpson
 import numpy as np
 import matplotlib.pyplot as plt
 
+#eliminar para que ejecute el menu normlmente
+import GUI.graficar_minimos as App
+
 def show_menu():
     print("1. Metodo Punto Fijo")
     print("2. Metodo de Biseccion")
@@ -145,6 +148,7 @@ def choose_method():
 
 if __name__ == "__main__":
     app = Application()
-    app.mainloop()
+    #app.mainloop()
+    
     
     #choose_method()
