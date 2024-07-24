@@ -2,7 +2,7 @@ from utils.funcionesaux import *
 from methods.biseccion import bisection_method
 from methods.puntofijo import fixedpoint
 from GUI.grafica_puntofijo import graficar_ecuacion_punto_fijo
-from methods.jacobi import jacobi_method
+#from methods.jacobi import jacobi_method
 
 from methods.newtonraphson import newton_raphson
 from GUI.grafica_newton import graficar_ecuacion as newton
@@ -99,18 +99,18 @@ def choose_method():
 
 
             elif method == 5:
-                print("\t*** Metodo de Jacobi ***")
+                # print("\t*** Metodo de Jacobi ***")
                 
-                parametros_jacobi = capturar_parametros_jacobi()
-                if parametros_jacobi is not None:
-                    A, b, x0, tol, max_iter = parametros_jacobi
-                    x = jacobi_method(A, b, x0, tol, max_iter)
-                    if np.any(x != x0):  
-                        print(f"La solución del sistema de ecuaciones es: {x}")
-                    else:
-                        print("El método de Jacobi no logró encontrar una solución diferente de la inicial.")
-                else:
-                    print("Los parámetros no fueron capturados correctamente.")               
+                # parametros_jacobi = capturar_parametros_jacobi()
+                # if parametros_jacobi is not None:
+                #     A, b, x0, tol, max_iter = parametros_jacobi
+                #     x = jacobi_method(A, b, x0, tol, max_iter)
+                #     if np.any(x != x0):  
+                #         print(f"La solución del sistema de ecuaciones es: {x}")
+                #     else:
+                #         print("El método de Jacobi no logró encontrar una solución diferente de la inicial.")
+                # else:
+                #     print("Los parámetros no fueron capturados correctamente.")               
                 
                 #Esto es para cuando ya se vaya a implementar los graficos
                 # Llamar al método de Jacobi y capturar la convergencia

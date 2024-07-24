@@ -15,9 +15,11 @@ def graficar_trapecio(f, a, b, n, result):
     x_trapecios = np.linspace(a, b, n + 1)
     y_trapecios = f(x_trapecios)
     
+    colors = plt.cm.viridis(np.linspace(0, 1, n))  # Genera una lista de colores con un gradiente
+
     for i in range(n):
         plt.fill([x_trapecios[i], x_trapecios[i], x_trapecios[i+1], x_trapecios[i+1]], 
-                 [0, y_trapecios[i], y_trapecios[i+1], 0], 'b', edgecolor='r', alpha=0.2)
+                 [0, y_trapecios[i], y_trapecios[i+1], 0], color=colors[i], edgecolor='r', alpha=0.6)
     
     plt.xlabel('x')
     plt.ylabel('f(x)')
@@ -59,7 +61,6 @@ def auxTrapecio():
                 messagebox.showerror("Error", "El número de trapecios debe ser mayor que 0.")
                 return
             result = trapecio.trapecio(f, a, b, n)
-            #messagebox.showinfo("Resultado", f"La integral aproximada es: {result}")
             graficar_trapecio(f, a, b, n, result)
             
         except ValueError:
@@ -88,7 +89,7 @@ def auxTrapecio():
     entrada_ecuacion = tk.Entry(app, width=40, validate='key', validatecommand=vcmdecu)
     entrada_ecuacion.grid(row=1, column=2, columnspan=6)
     
-    teclado(app,entrada_ecuacion)
+    teclado(app, entrada_ecuacion)
 
     tk.Label(app, text="Limite inferior (a):").grid(row=8, column=2, columnspan=6)
     entry_a = tk.Entry(app)
@@ -106,3 +107,6 @@ def auxTrapecio():
     calculate_button.grid(row=15, columnspan=6, column=2)
 
     app.mainloop()
+
+if __name__ == "__main__":
+    auxTrapecio()
