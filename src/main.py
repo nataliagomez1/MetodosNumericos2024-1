@@ -146,9 +146,10 @@ def choose_method():
         else:
             print("Entrada inválida. Ingrese un número entero.")
 
+
+from GUI.menu import Application
+
 if __name__ == "__main__":
     app = Application()
-    #app.mainloop()
+    app.mainloop()
     
-    
-    #choose_method()
