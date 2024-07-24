@@ -4,6 +4,7 @@ from PIL import Image, ImageTk
 
 from GUI.calculadora import center_window
 import GUI.grafica_trapecio as trapecio
+import GUI.grafica_biseccion as biseccion
 import GUI.grafica_puntofijo as punto_fijo
 import GUI.grafica_newton as newton
 import GUI.grafica_secante as secante
@@ -24,7 +25,7 @@ def on_button_click(button_name):
     elif(button_name == 'Punto fijo'):
         punto_fijo.graficar_ecuacion_punto_fijo() 
     elif(button_name == 'Biseccion'):
-        punto_fijo.graficar_ecuacion_punto_fijo() #FALTA
+        biseccion.interfaz_grafica_biseccion()
     elif(button_name == 'New Raphson'):
         newton.graficar_ecuacion()
     elif(button_name == 'Secante'):
