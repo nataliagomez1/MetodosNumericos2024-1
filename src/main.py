@@ -56,11 +56,11 @@ def choose_method():
             elif method == 2:
                 print("\t*** Metodo de Biseccion ***")
 
-                ecuacion_b = capturar_ecuacion_biseccion()
-                parametros_biseccion = capturar_parametros_biseccion()
-                if parametros_biseccion is not None:
-                        izquierda, derecha, tol, max_iter = parametros_biseccion
-                        print(bisection_method(ecuacion_b, izquierda, derecha, tol, max_iter))
+                # ecuacion_b = capturar_ecuacion_biseccion()
+                # parametros_biseccion = capturar_parametros_biseccion()
+                # if parametros_biseccion is not None:
+                #         izquierda, derecha, tol, max_iter = parametros_biseccion
+                #         print(bisection_method(ecuacion_b, izquierda, derecha, tol, max_iter))
 
             
             elif method == 3:
