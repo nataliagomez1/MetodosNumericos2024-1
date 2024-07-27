@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from sympy import symbols, lambdify, sympify
 
 from methods.puntofijo import fixedpoint
-from GUI.calculadora import teclado,center_window
+from GUI.calculadora import teclado,center_window,validate_entry_ecu,validate_entry_decInt
 
 def graficar_punto_fijo(ecuacion, x0):
     try:
@@ -62,16 +62,20 @@ def graficar_ecuacion_punto_fijo():
     frame_derecho = tk.Frame(ventana, bg="#f0f0f0")
     frame_derecho.pack(side=tk.RIGHT, padx=20, pady=20)
 
-    etiqueta_ecuacion = tk.Label(frame_izquierdo, text="Ingrese la ecuación en términos de x:", bg="#f0f0f0")
+    etiqueta_ecuacion = tk.Label(frame_izquierdo, text="Ingrese la transformada g(x):", bg="#f0f0f0")
     etiqueta_ecuacion.grid(row=0, column=0, padx=10, pady=10)
+    
+    vcmdecu = (ventana.register(validate_entry_ecu), '%P')
+    entrada_ecuacion = tk.Entry(frame_izquierdo, width=40, validate='key', validatecommand=vcmdecu)
 
-    entrada_ecuacion = tk.Entry(frame_izquierdo, width=40)
+    #entrada_ecuacion = tk.Entry(frame_izquierdo, width=40)
     entrada_ecuacion.grid(row=1, column=0, padx=10, pady=10)
     
     etiqueta_x0 = tk.Label(frame_izquierdo, text="Ingrese el punto inicial x0:", bg="#f0f0f0")
     etiqueta_x0.grid(row=2, column=0, padx=10, pady=10)
 
-    entrada_x0 = tk.Entry(frame_izquierdo, width=40)
+    vcmda = (ventana.register(validate_entry_decInt), '%P')
+    entrada_x0 = tk.Entry(frame_izquierdo, width=40, validate='key', validatecommand=vcmda)
     entrada_x0.grid(row=3, column=0, padx=10, pady=10)
 
     teclado(frame_derecho, entrada_ecuacion)

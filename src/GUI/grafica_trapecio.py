@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import tkinter as tk
 from tkinter import messagebox
 import methods.trapecio as trapecio
-from GUI.calculadora import center_window, teclado, teclado_digitos
+from GUI.calculadora import center_window, teclado, validate_entry_ecu, validate_entry_decInt
 
 def graficar_trapecio(f, a, b, n, result):
     x = np.linspace(a, b, 1000)
@@ -78,12 +78,7 @@ def auxTrapecio():
     etiqueta = tk.Label(app, text="Ingrese la ecuación en términos de x:", bg="#f0f0f0")
     etiqueta.grid(row=0, column=2, columnspan=6)
 
-    def validate_entry_ecu(new_value):
-        allowed_chars = "0123456789x√().+-*/^e"
-        for char in new_value:
-            if char not in allowed_chars:
-                return False
-        return True
+    
 
     vcmdecu = (app.register(validate_entry_ecu), '%P')
     entrada_ecuacion = tk.Entry(app, width=40, validate='key', validatecommand=vcmdecu)
@@ -92,11 +87,12 @@ def auxTrapecio():
     teclado(app, entrada_ecuacion)
 
     tk.Label(app, text="Limite inferior (a):").grid(row=8, column=2, columnspan=6)
-    entry_a = tk.Entry(app)
+    vcmda = (app.register(validate_entry_decInt), '%P')
+    entry_a = tk.Entry(app, width=40, validate='key', validatecommand=vcmda)
     entry_a.grid(row=9, column=2, columnspan=6)
 
     tk.Label(app, text="Limite superior (b):").grid(row=10, column=2, columnspan=6)
-    entry_b = tk.Entry(app)
+    entry_b = tk.Entry(app, width=40, validate='key', validatecommand=vcmda)
     entry_b.grid(row=11, column=2, columnspan=6)
 
     tk.Label(app, text="Número de trapecios (n):").grid(row=12, column=2, columnspan=6)

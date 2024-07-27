@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sympy import symbols, lambdify, sympify
 from methods.simpson import simpson
-from GUI.calculadora import center_window, teclado
+from GUI.calculadora import center_window, teclado, validate_entry_ecu, validate_entry_decInt
 
 def graficar_simpson(ecuacion, a, b, n):
     try:
@@ -64,13 +64,6 @@ def graficar_ecuacion_simpson():
     etiqueta_ecuacion = tk.Label(frame_izquierdo, text="Ingrese la ecuación en términos de x:", bg="#f0f0f0")
     etiqueta_ecuacion.grid(row=0, column=0, padx=10, pady=10)
 
-    def validate_entry_ecu(new_value):
-        allowed_chars = "0123456789x√().+-*/^e"
-        for char in new_value:
-            if char not in allowed_chars:
-                return False
-        return True
-
     vcmdecu = (ventana.register(validate_entry_ecu), '%P')
     entrada_ecuacion = tk.Entry(frame_izquierdo, width=40, validate='key', validatecommand=vcmdecu)
     entrada_ecuacion.grid(row=1, column=0, padx=10, pady=10)
@@ -78,23 +71,14 @@ def graficar_ecuacion_simpson():
     etiqueta_a = tk.Label(frame_izquierdo, text="Ingrese el límite inferior a:", bg="#f0f0f0")
     etiqueta_a.grid(row=2, column=0, padx=10, pady=10)
 
-    def validate_entry_limite(new_value):
-        if new_value == "":
-            return True
-        try:
-            float(new_value)
-            return True
-        except ValueError:
-            return False
-
-    vcmda = (ventana.register(validate_entry_limite), '%P')
+    vcmda = (ventana.register(validate_entry_decInt), '%P')
     entrada_a = tk.Entry(frame_izquierdo, width=40, validate='key', validatecommand=vcmda)
     entrada_a.grid(row=3, column=0, padx=10, pady=10)
 
     etiqueta_b = tk.Label(frame_izquierdo, text="Ingrese el límite superior b:", bg="#f0f0f0")
     etiqueta_b.grid(row=4, column=0, padx=10, pady=10)
 
-    vcmdb = (ventana.register(validate_entry_limite), '%P')
+    vcmdb = (ventana.register(validate_entry_decInt), '%P')
     entrada_b = tk.Entry(frame_izquierdo, width=40, validate='key', validatecommand=vcmdb)
     entrada_b.grid(row=5, column=0, padx=10, pady=10)
 

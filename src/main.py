@@ -1,5 +1,5 @@
 from utils.funcionesaux import *
-from methods.biseccion import bisection_method
+from methods.biseccion import biseccion
 from methods.puntofijo import fixedpoint
 from GUI.grafica_puntofijo import graficar_ecuacion_punto_fijo
 #from methods.jacobi import jacobi_method
