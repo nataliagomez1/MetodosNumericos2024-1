@@ -70,6 +70,7 @@ def auxTrapecio():
     app.title("Método del Trapecio")
     window_width = 580
     window_height = 630
+    app.resizable(False, False)
     app.geometry(f"{window_width}x{window_height}")
     center_window(app, window_width, window_height)
 

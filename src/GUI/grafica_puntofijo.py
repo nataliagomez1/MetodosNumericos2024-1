@@ -53,6 +53,8 @@ def graficar_ecuacion_punto_fijo():
     ventana.title("Graficador de Ecuaciones - Punto Fijo")
     window_width = 800
     window_height = 430
+    ventana.resizable(False, False)
+
     ventana.geometry(f"{window_width}x{window_height}")
     center_window(ventana, window_width, window_height)
 

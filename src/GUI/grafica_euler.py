@@ -5,9 +5,7 @@ import matplotlib.pyplot as plt
 from sympy import symbols, lambdify, sympify
 
 from methods.euler import euler
-from GUI.calculadora import teclado,center_window
-
-
+from GUI.calculadora import teclado, center_window
 
 def graficar(ecuacion, y0, t0, tf, n_intervals):
     try:
@@ -48,7 +46,7 @@ def graficar_ecuacion():
     ventana.title("Graficador de Ecuaciones - Punto Fijo")
     window_width = 800
     window_height = 430
-    ventana.resizable(False, False)
+    ventana.resizable(False,False)
     ventana.geometry(f"{window_width}x{window_height}")
     center_window(ventana, window_width, window_height)
     
@@ -101,8 +99,8 @@ def graficar_ecuacion():
         except ValueError:
             messagebox.showerror("Error", "Los valores iniciales y el número de intervalos deben ser números válidos")
 
-    boton_graficar = tk.Button(ventana, text="Graficar", command=on_graficar, bg="#4CAF50", fg="white")
-    boton_graficar.grid(row=4, column=0, padx=10, pady=10)
+    boton_graficar = tk.Button(frame_derecho, text="Graficar", command=on_graficar, bg="#4CAF50", fg="white")
+    boton_graficar.grid(row=8, column=1, padx=10, pady=10)
 
     ventana.mainloop()
 

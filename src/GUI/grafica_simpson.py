@@ -50,6 +50,7 @@ def graficar_ecuacion_simpson():
     ventana.title("Graficador de Ecuaciones - Método de Simpson")
     window_width = 800
     window_height = 430
+    ventana.resizable(False, False)
     ventana.geometry(f"{window_width}x{window_height}")
     center_window(ventana, window_width, window_height)
 
