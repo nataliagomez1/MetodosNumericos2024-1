@@ -1,11 +1,13 @@
 import tkinter as tk
 from tkinter import messagebox
 from methods.jacobi import generate_matrix_entries, collect_matrix, calculate_jacobi, collect_vector
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 def graficar_jacobi():
     root = tk.Tk()
     root.title("Método de Jacobi")
-    root.geometry("600x400")
+    root.geometry("800x600")
     root.configure(bg="#f0f0f0")
 
     tk.Label(root, text="Tamaño de la matriz (n x n):").grid(row=0, column=0, padx=10, pady=10)
@@ -57,6 +59,26 @@ def graficar_jacobi():
     max_iter_entry.grid(row=6, column=1, padx=10, pady=10)
     max_iter_entry.insert(0, "100")
 
+    def show_results_window(result, iterations, errors):
+        result_window = tk.Toplevel(root)
+        result_window.title("Resultados del Método de Jacobi")
+        result_window.geometry("800x600")
+        result_window.configure(bg="#f0f0f0")
+        
+        result_label = tk.Label(result_window, text=f"Solución: {result}\nIteraciones: {iterations}", bg="#f0f0f0")
+        result_label.pack(pady=10)
+        
+        fig, ax = plt.subplots()
+        ax.plot(errors, label='Error')
+        ax.set_xlabel('Iteración')
+        ax.set_ylabel('Error')
+        ax.set_title('Convergencia del Método de Jacobi')
+        ax.legend()
+        
+        canvas = FigureCanvasTkAgg(fig, master=result_window)
+        canvas.draw()
+        canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
+
     def on_calculate():
         A = collect_matrix(matrix_entries)
         b = collect_vector(vector_entries)
@@ -68,20 +90,9 @@ def graficar_jacobi():
             tol = float(tol_entry.get())
             max_iterations = int(max_iter_entry.get())
             result, iterations, errors = calculate_jacobi(A, b, x0, tol, max_iterations)
-            messagebox.showinfo("Resultado", f"Solución: {result}\nIteraciones: {iterations}")
-            plot_convergence(errors)
+            show_results_window(result, iterations, errors)
         except ValueError:
             messagebox.showerror("Error", "Los valores iniciales y los parámetros deben ser números válidos")
-
-    def plot_convergence(errors):
-        import matplotlib.pyplot as plt
-        plt.figure()
-        plt.plot(errors, marker='o')
-        plt.title('Convergencia del método de Jacobi')
-        plt.xlabel('Iteraciones')
-        plt.ylabel('Norma del error')
-        plt.grid(True)
-        plt.show()
 
     calculate_button = tk.Button(root, text="Calcular", command=on_calculate, bg="#4CAF50", fg="white")
     calculate_button.grid(row=7, column=0, columnspan=3, padx=10, pady=10)
@@ -90,3 +101,4 @@ def graficar_jacobi():
 
 if __name__ == "__main__":
     graficar_jacobi()
+
