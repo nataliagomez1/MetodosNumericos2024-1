@@ -43,7 +43,7 @@ def graficar(ecuacion, y0, t0, tf, n_intervals):
 
 def graficar_ecuacion():
     ventana = tk.Tk()
-    ventana.title("Graficador de Ecuaciones - Punto Fijo")
+    ventana.title("Graficador de Ecuaciones - Euler")
     window_width = 800
     window_height = 430
     ventana.resizable(False,False)

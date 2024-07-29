@@ -49,7 +49,7 @@ class Application(tk.Tk):
         #self.geometry("800x400")
         self.create_widgets()
         window_width = 800
-        window_height = 400
+        window_height = 430
         self.geometry(f"{window_width}x{window_height}")
         center_window(self, window_width, window_height)
 
