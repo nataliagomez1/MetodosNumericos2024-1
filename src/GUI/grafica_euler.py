@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from sympy import symbols, lambdify, sympify
 
 from methods.euler import euler
-from GUI.calculadora import teclado, center_window
+from GUI.calculadora import teclado_euler, center_window
 
 def graficar(ecuacion, y0, t0, tf, n_intervals):
     try:
@@ -30,7 +30,7 @@ def graficar(ecuacion, y0, t0, tf, n_intervals):
         plt.text(t0, y0, f'({t0:.2f}, {y0:.2f})', fontsize=12, verticalalignment='bottom')
         plt.text(tf, y_vals[-1], f'({tf:.2f}, {y_vals[-1]:.2f})', fontsize=12, verticalalignment='bottom')
 
-        plt.xlabel('Tiempo (t)')
+        plt.xlabel('x')
         plt.ylabel('y(t)')
         plt.title(f'Gráfico de la solución usando el método de Euler\ny\' = {ecuacion}')
 
@@ -86,7 +86,7 @@ def graficar_ecuacion():
     entrada_n_intervals = tk.Entry(frame_izquierdo, width=30)
     entrada_n_intervals.pack(pady=10)
     
-    teclado(frame_derecho, entrada_ecuacion)
+    teclado_euler(frame_derecho, entrada_ecuacion)
 
     def on_graficar():
         ecuacion = entrada_ecuacion.get()
