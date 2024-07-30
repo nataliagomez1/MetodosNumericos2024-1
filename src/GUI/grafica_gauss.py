@@ -33,7 +33,7 @@ def capturar_parametros_gauss_seidel(A_str, b_str, x0_str, tol_str, max_iter_str
     except Exception as e:
         messagebox.showerror("Error", f"Ocurrió un error: {str(e)}")
 
-def interfaz_grafica_gauss_seidel():
+def interfaz_grafica_gauss():
     root = Tk()
     root.title("Método de Gauss-Seidel")
 

@@ -86,6 +86,7 @@ def graficar_ecuacion_punto_fijo():
         ecuacion = entrada_ecuacion.get()
         try:
             x0 = float(entrada_x0.get())
+            ventana.destroy()
             graficar_punto_fijo(ecuacion, x0)
         except ValueError:
             messagebox.showerror("Error", "El punto inicial x0 debe ser un número válido")
