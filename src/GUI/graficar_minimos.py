@@ -35,60 +35,60 @@ def graficar_minimos_cuadrados(x, y, coeficientes):
     plt.grid(True)
     plt.show()
 
-def add_point():
-    try:
-        x = float(x_entry.get())
-        y = float(y_entry.get())
-        points.append((x, y))
-        messagebox.showinfo("Info", f"Punto ({x}, {y}) agregado.")
-        x_entry.delete(0, tk.END)
-        y_entry.delete(0, tk.END)
-    except ValueError:
-        messagebox.showerror("Error", "Por favor, ingrese valores numéricos.")
+def graf_minimos():
+    def add_point():
+        try:
+            x = float(x_entry.get())
+            y = float(y_entry.get())
+            points.append((x, y))
+            messagebox.showinfo("Info", f"Punto ({x}, {y}) agregado.")
+            x_entry.delete(0, tk.END)
+            y_entry.delete(0, tk.END)
+        except ValueError:
+            messagebox.showerror("Error", "Por favor, ingrese valores numéricos.")
 
-def calculate():
-    if len(points) < 2:
-        messagebox.showerror("Error", "Se necesitan al menos dos puntos.")
-        return
-    
-    x, y = zip(*points)
-    try:
-        degree = int(degree_entry.get())
-    except ValueError:
-        messagebox.showerror("Error", "Por favor, ingrese un grado válido.")
-        return
-    
-    coeficientes = minimos_cuadrados(x, y, degree)
-    graficar_minimos_cuadrados(np.array(x), np.array(y), coeficientes)
+    def calculate():
+        if len(points) < 2:
+            messagebox.showerror("Error", "Se necesitan al menos dos puntos.")
+            return
+        
+        x, y = zip(*points)
+        try:
+            degree = int(degree_entry.get())
+        except ValueError:
+            messagebox.showerror("Error", "Por favor, ingrese un grado válido.")
+            return
+        
+        coeficientes = minimos_cuadrados(x, y, degree)
+        graficar_minimos_cuadrados(np.array(x), np.array(y), coeficientes)
 
-# Configuración de la ventana principal
-root = tk.Tk()
-root.title("Mínimos Cuadrados")
+    root = tk.Tk()
+    root.title("Mínimos Cuadrados")
 
-points = []
+    points = []
 
-label = tk.Label(root, text="Ingrese los puntos (x, y):")
-label.pack()
+    label = tk.Label(root, text="Ingrese los puntos (x, y):")
+    label.pack()
 
-x_entry = tk.Entry(root)
-x_entry.pack()
-x_entry.insert(0, "x")
+    x_entry = tk.Entry(root)
+    x_entry.pack()
+    x_entry.insert(0, "x")
 
-y_entry = tk.Entry(root)
-y_entry.pack()
-y_entry.insert(0, "y")
+    y_entry = tk.Entry(root)
+    y_entry.pack()
+    y_entry.insert(0, "y")
 
-add_button = tk.Button(root, text="Agregar Punto", command=add_point)
-add_button.pack()
+    add_button = tk.Button(root, text="Agregar Punto", command=add_point)
+    add_button.pack()
 
-degree_label = tk.Label(root, text="Grado del polinomio:")
-degree_label.pack()
+    degree_label = tk.Label(root, text="Grado del polinomio:")
+    degree_label.pack()
 
-degree_entry = tk.Entry(root)
-degree_entry.pack()
-degree_entry.insert(0, "1")
+    degree_entry = tk.Entry(root)
+    degree_entry.pack()
+    degree_entry.insert(0, "1")
 
-calculate_button = tk.Button(root, text="Calcular y Graficar", command=calculate)
-calculate_button.pack()
+    calculate_button = tk.Button(root, text="Calcular y Graficar", command=calculate)
+    calculate_button.pack()
 
-root.mainloop()
+    root.mainloop()
