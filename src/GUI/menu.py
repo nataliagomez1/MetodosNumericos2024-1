@@ -14,7 +14,7 @@ import GUI.grafica_simpson as simpson
 
 # Nombres de los botones e imágenes
 button_names = ['Punto fijo', 'Biseccion', 'New Raphson', 'Secante', 'Jacobi', 
-                'Gauss-Seidel', 'Simpson', 'Trapecio', 'Euler', 'Expo']
+                'Gauss-Seidel', 'Simpson', 'Trapecio', 'Euler', 'Minimos cuadrados']
 
 # Rutas de las imágenes
 image_paths = [f'./Recursos/image{i}.png' for i in range(1, 11)]
@@ -33,7 +33,7 @@ def on_button_click(button_name):
     elif(button_name == 'Jacobi'):
         jacobi.graficar_jacobi()
     elif(button_name == 'Gauss-Seidel'):
-        gauss.interfaz_grafica_gauss()
+        gauss.interfaz_grafica_gauss_seidel()
     elif(button_name == 'Simpson'):
         simpson.graficar_ecuacion_simpson()
     elif(button_name == 'Euler'):
