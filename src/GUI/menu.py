@@ -40,14 +40,13 @@ def on_button_click(button_name):
         simpson.graficar_ecuacion_simpson()
     elif(button_name == 'Euler'):
         euler.graficar_ecuacion()
-    elif(button_name == 'Expo'):
+    elif(button_name == 'Minimos cuadrados'):
         minimos.graf_minimos()
 
 class Application(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Menu with Buttons")
-        #self.geometry("800x400")
         self.create_widgets()
         window_width = 800
         window_height = 430
@@ -55,18 +54,16 @@ class Application(tk.Tk):
         center_window(self, window_width, window_height)
 
     def create_widgets(self):
-        # Añadir el título
         title_label = ttk.Label(self, text="Métodos Numéricos", font=("Helvetica", 16))
         title_label.grid(row=0, column=0, columnspan=5, pady=10)
 
-        # Configurar la cuadrícula
-        for i in range(1, 3): # 3 filas incluyendo el título
+        for i in range(1, 3):
             self.grid_rowconfigure(i, weight=1)
-        for j in range(5): # 5 columnas
+        for j in range(5): 
             self.grid_columnconfigure(j, weight=1)
 
         for index in range(10):
-            row = (index // 5) + 1  # Ajustar filas para dejar espacio al título
+            row = (index // 5) + 1  
             col = index % 5
 
             frame = ttk.Frame(self)

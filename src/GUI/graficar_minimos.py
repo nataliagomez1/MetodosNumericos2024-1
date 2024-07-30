@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import tkinter as tk
 from tkinter import messagebox
+from GUI.calculadora import center_window
 from methods.minimosCuadrados import minimos_cuadrados
 
 def construir_leyenda(coeficientes):
@@ -60,35 +61,49 @@ def graf_minimos():
             return
         
         coeficientes = minimos_cuadrados(x, y, degree)
+        root.destroy()
         graficar_minimos_cuadrados(np.array(x), np.array(y), coeficientes)
 
     root = tk.Tk()
     root.title("Mínimos Cuadrados")
-
+    window_width = 800
+    window_height = 430
+    root.geometry(f"{window_width}x{window_height}")
+    center_window(root, window_width, window_height)
+    root.resizable(False, False)
+    
     points = []
 
+    root.grid_rowconfigure(0, weight=1)
+    root.grid_rowconfigure(1, weight=1)
+    root.grid_rowconfigure(2, weight=1)
+    root.grid_rowconfigure(3, weight=1)
+    root.grid_rowconfigure(4, weight=1)
+    root.grid_rowconfigure(5, weight=1)
+    root.grid_columnconfigure(0, weight=1)
+
     label = tk.Label(root, text="Ingrese los puntos (x, y):")
-    label.pack()
+    label.grid(row=0, column=0, padx=10, pady=10, sticky='ew')
 
     x_entry = tk.Entry(root)
-    x_entry.pack()
+    x_entry.grid(row=1, column=0, padx=10, pady=5)
     x_entry.insert(0, "x")
 
     y_entry = tk.Entry(root)
-    y_entry.pack()
+    y_entry.grid(row=2, column=0, padx=10, pady=5)
     y_entry.insert(0, "y")
 
     add_button = tk.Button(root, text="Agregar Punto", command=add_point)
-    add_button.pack()
+    add_button.grid(row=3, column=0, padx=10, pady=5)
 
     degree_label = tk.Label(root, text="Grado del polinomio:")
-    degree_label.pack()
+    degree_label.grid(row=4, column=0, padx=10, pady=10, sticky='ew')
 
     degree_entry = tk.Entry(root)
-    degree_entry.pack()
+    degree_entry.grid(row=5, column=0, padx=10, pady=5)
     degree_entry.insert(0, "1")
 
-    calculate_button = tk.Button(root, text="Calcular y Graficar", command=calculate)
-    calculate_button.pack()
+    calculate_button = tk.Button(root, text="Calcular y Graficar", command=calculate, bg="#4CAF50", fg="white")
+    calculate_button.grid(row=6, column=0, padx=10, pady=10)
 
     root.mainloop()
