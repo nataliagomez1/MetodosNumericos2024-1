@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import tkinter as tk
 from tkinter import messagebox
 import methods.trapecio as trapecio
-from GUI.calculadora import center_window, teclado, teclado_digitos
+from GUI.calculadora import center_window, teclado, validate_entry_ecu, validate_entry_decInt
 
 def graficar_trapecio(f, a, b, n, result):
     x = np.linspace(a, b, 1000)
@@ -15,9 +15,11 @@ def graficar_trapecio(f, a, b, n, result):
     x_trapecios = np.linspace(a, b, n + 1)
     y_trapecios = f(x_trapecios)
     
+    colors = plt.cm.viridis(np.linspace(0, 1, n))  # Genera una lista de colores con un gradiente
+
     for i in range(n):
         plt.fill([x_trapecios[i], x_trapecios[i], x_trapecios[i+1], x_trapecios[i+1]], 
-                 [0, y_trapecios[i], y_trapecios[i+1], 0], 'b', edgecolor='r', alpha=0.2)
+                 [0, y_trapecios[i], y_trapecios[i+1], 0], color=colors[i], edgecolor='r', alpha=0.6)
     
     plt.xlabel('x')
     plt.ylabel('f(x)')
@@ -59,7 +61,6 @@ def auxTrapecio():
                 messagebox.showerror("Error", "El número de trapecios debe ser mayor que 0.")
                 return
             result = trapecio.trapecio(f, a, b, n)
-            #messagebox.showinfo("Resultado", f"La integral aproximada es: {result}")
             graficar_trapecio(f, a, b, n, result)
             
         except ValueError:
@@ -69,6 +70,7 @@ def auxTrapecio():
     app.title("Método del Trapecio")
     window_width = 580
     window_height = 630
+    app.resizable(False, False)
     app.geometry(f"{window_width}x{window_height}")
     center_window(app, window_width, window_height)
 
@@ -77,25 +79,21 @@ def auxTrapecio():
     etiqueta = tk.Label(app, text="Ingrese la ecuación en términos de x:", bg="#f0f0f0")
     etiqueta.grid(row=0, column=2, columnspan=6)
 
-    def validate_entry_ecu(new_value):
-        allowed_chars = "0123456789x√().+-*/^e"
-        for char in new_value:
-            if char not in allowed_chars:
-                return False
-        return True
+    
 
     vcmdecu = (app.register(validate_entry_ecu), '%P')
     entrada_ecuacion = tk.Entry(app, width=40, validate='key', validatecommand=vcmdecu)
     entrada_ecuacion.grid(row=1, column=2, columnspan=6)
     
-    teclado(app,entrada_ecuacion)
+    teclado(app, entrada_ecuacion)
 
     tk.Label(app, text="Limite inferior (a):").grid(row=8, column=2, columnspan=6)
-    entry_a = tk.Entry(app)
+    vcmda = (app.register(validate_entry_decInt), '%P')
+    entry_a = tk.Entry(app, width=40, validate='key', validatecommand=vcmda)
     entry_a.grid(row=9, column=2, columnspan=6)
 
     tk.Label(app, text="Limite superior (b):").grid(row=10, column=2, columnspan=6)
-    entry_b = tk.Entry(app)
+    entry_b = tk.Entry(app, width=40, validate='key', validatecommand=vcmda)
     entry_b.grid(row=11, column=2, columnspan=6)
 
     tk.Label(app, text="Número de trapecios (n):").grid(row=12, column=2, columnspan=6)
@@ -106,3 +104,6 @@ def auxTrapecio():
     calculate_button.grid(row=15, columnspan=6, column=2)
 
     app.mainloop()
+
+if __name__ == "__main__":
+    auxTrapecio()

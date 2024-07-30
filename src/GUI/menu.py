@@ -11,6 +11,7 @@ import GUI.grafica_secante as secante
 import GUI.grafica_gauss as gauss
 import GUI.grafica_jacobi as jacobi
 import GUI.grafica_simpson as simpson
+import GUI.grafica_euler as euler
 
 # Nombres de los botones e imágenes
 button_names = ['Punto fijo', 'Biseccion', 'New Raphson', 'Secante', 'Jacobi', 
@@ -37,7 +38,7 @@ def on_button_click(button_name):
     elif(button_name == 'Simpson'):
         simpson.graficar_ecuacion_simpson()
     elif(button_name == 'Euler'):
-        punto_fijo.graficar_ecuacion_punto_fijo() #FALTA
+         euler.graficar_ecuacion()
     elif(button_name == 'Expo'):
         punto_fijo.graficar_ecuacion_punto_fijo() #FALTA
 
@@ -48,7 +49,7 @@ class Application(tk.Tk):
         #self.geometry("800x400")
         self.create_widgets()
         window_width = 800
-        window_height = 400
+        window_height = 430
         self.geometry(f"{window_width}x{window_height}")
         center_window(self, window_width, window_height)
 

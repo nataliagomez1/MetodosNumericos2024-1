@@ -1,11 +1,4 @@
 import tkinter as tk
-
-def button_action(button_number):
-    print(f"Button {button_number} clicked: Action {button_number}")
-    if button_number == 1:
-        create_calculator()
-        
-
 def button_action_calc(button_text, text_var, entry):
     print(f"Button {button_text} clicked: Action {button_text}")
     current_text = text_var.get()
@@ -29,53 +22,49 @@ def center_window(window, width, height):
 
     window.geometry(f"{width}x{height}+{x}+{y}")
 
-def create_calculator():
-    root = tk.Tk()
-    root.title("INGRESAR ECUACIÓN")
-    root.resizable(width=False, height=False)
+# def create_calculator():
+#     root = tk.Tk()
+#     root.title("INGRESAR ECUACIÓN")
+#     root.resizable(width=False, height=False)
     
-    text_var = tk.StringVar()
+#     text_var = tk.StringVar()
 
-    window_width = 780
-    window_height = 530
-    root.geometry(f"{window_width}x{window_height}")
-    center_window(root, window_width, window_height)
+#     window_width = 780
+#     window_height = 530
+#     root.geometry(f"{window_width}x{window_height}")
+#     center_window(root, window_width, window_height)
     
-    entry = tk.Entry(root, textvariable=text_var, font=("Arial", 18))
-    entry.grid(row=0, column=0, columnspan=6)
+#     entry = tk.Entry(root, textvariable=text_var, font=("Arial", 18))
+#     entry.grid(row=0, column=0, columnspan=6)
     
-    button_texts = [
-        "+", "-", "*", "/", "^", "√",
-        "(", ")", ".", "=", "x", "e",
-        "1", "2", "3", "4", "5", "6",
-        "7", "8", "9", "0", "borrar", "clear"
-    ]
+#     button_texts = [
+#         "+", "-", "*", "/", "^", "√",
+#         "(", ")", ".", "=", "x", "e",
+#         "1", "2", "3", "4", "5", "6",
+#         "7", "8", "9", "0", "borrar", "clear"
+#     ]
     
-    for i, texto in enumerate(button_texts, start=1):
-        button = tk.Button(
-            root, text=texto,
-            command=lambda t=texto: button_action_calc(t, text_var, entry),
-            bg="lightblue", fg="darkblue", 
-            activebackground="blue", activeforeground="white",  
-            width=5, height=2, padx=10, pady=5
-        )
-        row = (i - 1) // 6
-        column = (i - 1) % 6
-        button.grid(row=row+1, column=column, padx=5, pady=5)
+#     for i, texto in enumerate(button_texts, start=1):
+#         button = tk.Button(
+#             root, text=texto,
+#             command=lambda t=texto: button_action_calc(t, text_var, entry),
+#             bg="lightblue", fg="darkblue", 
+#             activebackground="blue", activeforeground="white",  
+#             width=5, height=2, padx=10, pady=5
+#         )
+#         row = (i - 1) // 6
+#         column = (i - 1) % 6
+#         button.grid(row=row+1, column=column, padx=5, pady=5)
 
-    root.mainloop()
+#    root.mainloop()
 def teclado(root,entry):
     text_var = tk.StringVar()
     button_texts = [
-        # "+", "-", "*", "/", "^", "√",
-        # "(", ")", ".", "=", "x", "e",
-        # "1", "2", "3", "4", "5", "6",
-        # "7", "8", "9", "0", "borrar", "clear"
-        
         "7", "8", "9", "/", "^", "√",
         "4", "5", "6", "=", "x", "e",
         "1", "2", "3", "+", "-", "*",
-        "0", ".", "(", ")", "borrar", "clear"
+        "0", ".", "(", ")", "borrar", "clear",
+        "sin(", "cos("
     ]
     
     for i, texto in enumerate(button_texts, start=1):
@@ -101,73 +90,20 @@ def teclado(root,entry):
         row = (i - 1) // 6
         column = (i - 1) % 6
         button.grid(row=row+2, column=column+1, padx=5, pady=5)
-
-def teclado_digitos(root,entry):
-    text_var = tk.StringVar()
-    button_texts = [
-        # "+", "-", "*", "/", "^", "√",
-        # "(", ")", ".", "=", "x", "e",
-        # "1", "2", "3", "4", "5", "6",
-        # "7", "8", "9", "0", "borrar", "clear"
         
-        "7", "8", "9",
-        "4", "5", "6",
-        "1", "2", "3", 
-        "0", "borrar", "clear"
-    ]
-    
-    for i, texto in enumerate(button_texts, start=1):
-        if texto.isdigit():
-            button = tk.Button(
-            root, text=texto,
-            command=lambda t=texto: button_action_calc(t, text_var, entry),
-            bg="#464158", fg="white", 
-            activebackground="#9E7682", activeforeground="white",  
-            width=5, height=2, padx=10, pady=5
-            )
-        else:
-            button = tk.Button(
-            root, text=texto,
-            command=lambda t=texto: button_action_calc(t, text_var, entry),
-            bg="#605770", fg="white", 
-            activebackground="#9E7682", activeforeground="white",  
-            width=5, height=2, padx=10, pady=5
-            )
-            
-            
-        
-        row = (i - 1) // 3
-        column = (i - 1) % 3
-        button.grid(row=row+8, column=column+1, padx=5, pady=5)
+def validate_entry_ecu(new_value):
+        allowed_chars = "0123456789x√().+-*/^e"
+        for char in new_value:
+            if char not in allowed_chars:
+                return False
+        return True
 
-def create_gui():
-    root = tk.Tk()
-    root.title("CALCULADORA DE MÉTODOS NUMÉRICOS")
-    root.resizable(width=False, height=False)
-
-    window_width = 780
-    window_height = 530
-    root.geometry(f"{window_width}x{window_height}")
-    center_window(root, window_width, window_height)
-
-    method_texts = [
-        "Punto fijo", "Biseccion", "Newton - Raphson", "Secante", 
-        "Jacobi", "Gauss - Seidel", "7", "8", "9", "10"
-    ]
-    
-    for i, texto in enumerate(method_texts, start=1):
-        button = tk.Button(
-            root, text=texto,
-            command=lambda i=i: button_action(i),
-            bg="lightblue", fg="darkblue", 
-            activebackground="blue", activeforeground="white",  
-            width=50, height=5, padx=10, pady=5
-        )
-        row = (i - 1) // 2
-        column = (i - 1) % 2
-        button.grid(row=row, column=column, padx=5, pady=5)
-
-    root.mainloop()
-
-if __name__ == "__main__":
-    create_gui()
+#hace que un campo de texto solo reciba numeros y punto decimal
+def validate_entry_decInt(new_value):
+        if new_value == "":
+            return True
+        try:
+            float(new_value)
+            return True
+        except ValueError:
+            return False
